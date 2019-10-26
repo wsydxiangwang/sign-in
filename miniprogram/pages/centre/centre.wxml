@@ -1,0 +1,8 @@
+<view class="container">
+<view class="info">
+  <open-data type="userAvatarUrl"></open-data>
+  <open-data type="userNickName"></open-data>
+</view>
+<button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button> 
+<button bindtap="getOpenId">获取数据</button> 
+</view>

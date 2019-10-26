@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="info">
+    <view>
+      <text>坚持天数</text>
+      <text>{{count}}</text>
+    </view>
+    <view>
+      <text>连续早起</text>
+      <text>10天</text>
+    </view>
+    <view>
+      <text>最长连续</text>
+      <text>10天</text>
+    </view>
+  </view>
+  <view class="word">一年之计在于春，一日之计在于晨。</view>
+  <button class="singnin-btn actived" bindtap="singnin">签到</button>
+  <view class="time">
+    <text>签到时间：</text>
+    <text>05:00~08:00</text>
+  </view>
+</view>
