@@ -2,7 +2,34 @@ const db = wx.cloud.database(); // 初始化数据库
 const app = getApp(); // 获取全局数据
 
 Page({
-
+  data:{
+    tempImg: [],  // 临时图片存储
+  },
+  uploadImgHandle: function(e){
+    // 选择图片
+    wx.chooseImage({
+      count: 9,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success(res){
+        // this.setData({
+        //   tempImg: res.tempFilePaths
+        // })
+        const tempFilePaths = res.tempFilePaths;
+        console.log(tempFilePaths)
+        wx.cloud.uploadFile({
+          cloudPath: new Date().getTime() + '.png', //仅为示例，非真实的接口地址
+          filePath: tempFilePaths[0],
+          success(res) {
+            console.log(res.fileID)
+          },
+          fail(err){
+            console.log(err)
+          }
+        })
+      }
+    })
+  },
   // 发布心情
   bindFormSubmit: function (e) {
     let data = {
