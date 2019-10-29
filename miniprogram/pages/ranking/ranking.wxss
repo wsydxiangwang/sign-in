@@ -1,0 +1,84 @@
+.container{
+
+}
+.ranking-tab{
+  display: flex;
+  justify-content: content;
+  align-items: center;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 1px solid #ddd;
+}
+.ranking-tab view{
+  flex: 1;
+}
+
+
+.ranking-list{
+  padding: 0 20rpx;
+}
+.ranking-list .item{
+  display: flex;
+  align-items: center;
+  color: #999;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 26rpx 0;
+}
+.ranking-list .item .rank{
+  width: 80rpx;
+  font-size: 34rpx;
+  text-align: center;
+}
+
+.ranking-list .item .info{
+  flex: 1;
+  width: 0;
+  height: 85rpx;
+}
+.ranking-list .item .info .image{
+  height: 85rpx;
+  width: 85rpx;
+  border: 1px solid #666;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  overflow: hidden;
+  float: left;
+}
+.ranking-list .item .info .image image{
+  height: 86rpx;
+  width: 86rpx;
+}
+
+.ranking-list .item .info .title{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  
+}
+.ranking-list .item .info .title .tit{
+  font-size: 30rpx;
+  color: #333;
+}
+.ranking-list .item .info .title .des{
+  font-size: 22rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ranking-list .item .like{
+  width: 80rpx;
+  font-size: 22rpx;
+  text-align: right;
+  color: #a6a6a6;
+}
+.ranking-list .item .count{
+  width: 80rpx;
+  font-size: 24rpx;
+  text-align: right;
+}
+.ranking-list .item .count text:first-child{
+  font-size: 34rpx;
+}

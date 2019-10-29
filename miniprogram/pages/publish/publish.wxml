@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="mood-publish">
+      <form bindsubmit="bindFormSubmit">
+        <textarea placeholder="留点空间给你写字" name="textarea"/>
+        <button form-type="submit"> 提交 </button>
+      </form>
+    </view>
+</view>

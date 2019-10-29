@@ -1,0 +1,1 @@
+<button class="login" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录</button> 

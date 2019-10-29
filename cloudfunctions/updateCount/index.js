@@ -9,13 +9,14 @@ const _ = db.command;
 exports.main = async (event, context) => {
 
   try {
-    return await db.collection('signinCount')
+    return await db.collection('userInfo')
     .where({
       _openid: event.openid
     })
     .update({
       data: {
-        count: _.inc(1)
+        count: _.inc(1),
+        lastTime: event.lastTime
       }
     })
   } catch (e) {

@@ -16,17 +16,64 @@ App({
       })
     }
 
+
+    var myDate = new Date(),
+        year = myDate.getFullYear(),
+        month = myDate.getMonth() + 1,
+        day = myDate.getDate(),
+        hours = myDate.getHours(),
+        min = myDate.getMinutes(),
+        sec = myDate.getSeconds();
+
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+    hours = hours < 10 ? '0' + hours : hours;
+    min = min < 10 ? '0' + min : min;
+    sec = sec < 10 ? '0' + sec : sec;
+
     this.globalData = {
-      openId: ''
+      openId: '',
+      nickName: '',
+      avatarUrl: '',
+      gender: '',
+      todayTime: `${year}${month}${day}`,
+      currentTime: `${hours}:${min}`,
+      currentDate: `${year}-${month}-${day} ${hours}:${min}:${sec}`
     },
 
     // 获取登录用户的openid
     wx.cloud.callFunction({
       name: 'login'
-    }).then(res => {
+    })
+    .then(res => {
       this.globalData.openId = res.result.openid;
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log(err)
+    })
+
+    var _this = this;
+    // 获取用户信息
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: res => {
+              _this.globalData = {
+                ..._this.globalData,
+                avatarUrl: res.userInfo.avatarUrl,
+                nickName: res.userInfo.nickName,
+                gender: res.userInfo.gender
+              }
+              // console.log(_this.globalData)
+            }
+          })
+        }else{
+          console.log('未授权')
+        }
+        
+      }
     })
   }
 })

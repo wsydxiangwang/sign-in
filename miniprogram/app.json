@@ -1,9 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/mood/mood.js",
+    "pages/centre/centre",
+    "pages/ranking/ranking",
     "pages/mood/mood",
-    "pages/centre/centre"
+    "pages/login/login",
+    "pages/publish/publish"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -24,12 +26,6 @@
       },
       {
         "pagePath": "pages/mood/mood",
-        "text": "学习计划",
-        "iconPath": "images/film.png",
-        "selectedIconPath": "images/film-actived.png"
-      },
-      {
-        "pagePath": "pages/index/index",
         "text": "心情小镇",
         "iconPath": "images/profile.png",
         "selectedIconPath": "images/profile-actived.png"

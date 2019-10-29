@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="ranking-tab">
+    <view>今日排行</view>
+    <view>总排行榜</view>
+  </view>
+  <view class="ranking-list">
+
+    <!-- 今日排行 -->
+    <block wx:if="{{todayList.length}}">
+      <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key>
+        <view class="rank">{{index + 1}}</view>
+        <view class="info">
+          <view class="image">
+            <image src="{{item.avatarUrl}}"></image>
+          </view>
+          <view class="title">
+            <text class="tit">{{item.nickName}}</text>
+            <text class="des">{{item.currentTime}}</text>
+          </view>
+        </view>
+        <view class="like">
+          点赞<text>0</text>
+        </view>
+      </view>
+    </block>
+    <block wx:else>    
+      <view>
+        还没人签到
+      </view>
+    </block>
+
+    <!-- 总排行榜 -->
+    <!-- <view class="item" wx:for="{{list}}" data-index="{{index}}" wx:item="item" wx:key>
+      <view class="rank">{{index}}</view>
+      <view class="info">
+        <view class="image">
+          <image src="{{item.avatarUrl}}"></image>
+        </view>
+        <view class="title">
+          <text class="tit">{{item.nickName}}</text>
+          <text class="des">这位童靴是吃货，签名这么可爱，都给吃了</text>
+        </view>
+      </view>
+      <view class="count">
+        <text>36</text>
+        <text>天</text>
+      </view>
+    </view> -->
+
+  </view>
+</view>

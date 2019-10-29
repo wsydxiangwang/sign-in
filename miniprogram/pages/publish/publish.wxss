@@ -1,0 +1,14 @@
+.container{
+  padding: 30rpx;
+  background: #fff;
+}
+.mood-publish{
+}
+.mood-publish textarea{
+  width: 100%;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
