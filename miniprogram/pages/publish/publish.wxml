@@ -3,12 +3,16 @@
       <form bindsubmit="bindFormSubmit">
         <textarea placeholder="留点空间给你写字" name="textarea"/>
 
-        <button type="warning" bindtap="uploadImgHandle">上传图片</button>
-        <view>
-          <block wx:for="{{tempImg}}" wx:key="{{index}}tmpimg">
-            <image src='{{item}}' mode='aspectFill'></image>
+        <view class="images">
+          <view class="item" wx:for="{{tempImg}}" wx:key>
+            <image src="{{item}}" mode="aspectFill"></image>
+          </view>
+          <block>
+            <view class="image-add" bindtap="uploadImgHandle"></view>
           </block>
         </view>
+
+        
 
         <button form-type="submit"> 提交 </button>
       </form>
