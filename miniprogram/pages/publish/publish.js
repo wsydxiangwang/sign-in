@@ -74,6 +74,9 @@ Page({
   },
   // 发布心情
   bindFormSubmit: function (e) {
+    wx.showLoading({
+      title: '提交中',
+    })
     let data = {
       openId: app.globalData.openId,       // ID
       userName: app.globalData.nickName,   // 昵称
@@ -82,68 +85,74 @@ Page({
       content: e.detail.value.textarea,    // 内容
       like: 0,      // 点赞
       comment: [],  // 评论
-      image: this.data.fileIDs,
       address: this.data.address
     }
 
     if(this.data.tempImg){ // 发表图片
-      
-      //只能一张张上传 遍历临时的图片数组
-      const promiseArr = [];
+    
+      let promiseArr = [];
+      this.data.fileIDs = [];  // 初始化
 
+      //只能一张张上传 遍历临时的图片数组
       for (let i = 0; i < this.data.tempImg.length; i++) {
         
         let filePath = this.data.tempImg[i]
         let suffix = /\.[^\.]+$/.exec(filePath)[0]; // 正则表达式，获取图片扩展名
-        
-        //在每次上传的时候，就往promiseArr里存一个promise，只有当所有的都返回结果时，才可以继续往下执行
+
         promiseArr.push(new Promise((reslove, reject) => {
-
           wx.cloud.uploadFile({
-            cloudPath: new Date().getTime() + suffix,
+            cloudPath: 'comment/' + new Date().getTime() + suffix,
             filePath: filePath, // 文件路径
-          }).then(res => {
-            
-            let newFileID = res.fileID; 
-
-            // 如果有图片 则累加
-            if (this.data.fileIDs) {
-              let fileIDsAdd = this.data.fileIDs.push(newFileID);
-
-              // console.log(fileIDsAdd)
-              // 更新页面图片
-              this.setData({
-                fileIDs: fileIDsAdd
-              })
-            } else {
-              // let fileIDsAdd = this.data.fileIDs.push(newFileID);
-              // // 图片显示到页面
-              // this.setData({
-              //   fileIDs: fileIDsAdd
-              // })
-              console.log(typeof this.data.fileIDs)
-            }
-            // console.log(newFileID)
-            console.log(data)
-
-            // console.log(this.data.fileIDs)
-          
-            reslove()
-          }).catch(error => {
-            console.log(error)
-            return;
           })
+            .then(res => {
+              // fileID添加到image数组
+              this.setData({
+                fileIDs: this.data.fileIDs.concat(res.fileID)
+              });
+              console.log(this.data.fileIDs)
+
+              reslove('success')
+            }).catch(error => {
+              console.log(error)
+              return;
+            })
         }))
-        Promise.all(promiseArr).then(res => {
-          console.log('4444')
-        })
+
       }
+      // 所有图片上传后执行
+      Promise.all(promiseArr).then(res => {
+        // 添加图片到数据列表
+        data.image = this.data.fileIDs;
+        console.log(data)
+
+        db.collection('comment').add({
+          data: data
+        }).then(res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '提交成功',
+          })
+          console.log('发表成功')
+          wx.navigateBack()
+        }).catch(err => {
+          console.log('发表失败')
+          console.log(err)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
     } else {
+      console.log(data)
       // 不发表图片 直接添加数据
       db.collection('comment').add({
         data: data
       }).then(res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '提交成功',
+        })
         console.log('发表成功')
+        wx.navigateBack()
       }).catch(err => {
         console.log('发表失败')
         console.log(err)

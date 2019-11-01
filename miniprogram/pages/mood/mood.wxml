@@ -24,10 +24,11 @@
               <image src="{{item}}" mode="aspectFill"></image>
             </view>
           </view>
+          <view class="address">{{item.address}}</view>
         </view>
 
         <view class="mood-foot">
-          <text class="like">{{item.like}}</text>
+          <text class="like" bindtap="like" data-index="{{index}}" >点赞{{item.like}}</text>
           <text class="comment-num">{{item.commentNum}}</text>
           <text class="comment-num">{{item.commentNum}}</text>
         </view>
