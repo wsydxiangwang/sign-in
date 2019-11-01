@@ -34,6 +34,7 @@ Page({
   // 点赞
   like: function(e){
     console.log(e)
+    // console.log(e.currentTarget.dataset.index)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -41,13 +42,19 @@ Page({
   onLoad: function (options) {
 
     // 加载心情列表
-    db.collection('comment')
-    .get()
-    .then(res => {
-      this.setData({
-        commentList: res.data
-      })
-    })    
+    // db.collection('comment')
+    // .skip(20)
+    // .orderBy('time', 'desc')
+    // .get()
+    // .then(res => {
+    //   console.log(res.data)
+    //   this.setData({
+    //     commentList: res.data
+    //   })
+    // })
+
+    
+
   },
 
   /**
