@@ -1,11 +1,15 @@
 const db = wx.cloud.database(); // 初始化数据库
 const app = getApp(); // 获取全局数据
 
+let currentPage = 0, // 当前第几页 0表示第一页
+    pageSize = 10;   // 每页显示的数据
 Page({
   data: {
     commentList: [], // 心情列表
     swiperList: [], // 当前轮播图片
-    swiperCurrent: 0
+    swiperCurrent: 0,
+    loadMore: false,
+    loadAll: false
   },
   // 查看当前图片组
   imageSwiper: function(e){
@@ -40,21 +44,62 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getData();
+  },
+  onReachBottom: function(){
+    console.log("上拉触底事件")
+    let that = this
+    if (!that.data.loadMore) {
+      that.setData({
+        loadMore: true, //加载中  
+        loadAll: false //是否加载完所有数据
+      });
 
-    // 加载心情列表
-    // db.collection('comment')
-    // .skip(20)
-    // .orderBy('time', 'desc')
-    // .get()
-    // .then(res => {
-    //   console.log(res.data)
-    //   this.setData({
-    //     commentList: res.data
-    //   })
-    // })
+      //加载更多，这里做下延时加载
+      setTimeout(function () {
+        that.getData()
+      }, 2000)
+    }
 
+  },
+  onPullDownRefresh: function(){
+    console.log(2)
+  },
+  getData(){
     
+    // 加载心情列表
+    db.collection('comment')
+      .skip(currentPage * pageSize)
+      .limit(pageSize)
+      .get()
+      .then(res => {
 
+        if(res.data && res.data.length > 0){
+          console.log(res.data)
+          currentPage++;
+          let list = this.data.commentList.concat(res.data);
+          this.setData({
+            commentList: list,
+            loadMore: false
+          })
+          if(res.data.length < pageSize){
+            this.setData({
+              loadMore: false,
+              loadAll: true
+            })
+          }
+        }else{
+          this.setData({
+            loadAll: true,
+            loadMore: false
+          })
+        }
+      
+        console.log(res.data)
+        this.setData({
+          commentList: res.data
+        })
+      })
   },
 
   /**
