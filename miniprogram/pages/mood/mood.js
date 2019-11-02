@@ -46,59 +46,42 @@ Page({
   onLoad: function (options) {
     this.getData();
   },
-  onReachBottom: function(){
-    console.log("上拉触底事件")
-    let that = this
-    if (!that.data.loadMore) {
-      that.setData({
-        loadMore: true, //加载中  
-        loadAll: false //是否加载完所有数据
-      });
-
-      //加载更多，这里做下延时加载
-      setTimeout(function () {
-        that.getData()
-      }, 2000)
-    }
-
-  },
-  onPullDownRefresh: function(){
-    console.log(2)
-  },
   getData(){
-    
     // 加载心情列表
     db.collection('comment')
       .skip(currentPage * pageSize)
       .limit(pageSize)
       .get()
       .then(res => {
+        console.log(res.data)
 
+        // 有数据
         if(res.data && res.data.length > 0){
-          console.log(res.data)
-          currentPage++;
+          currentPage++; // +1 方可获取下一页数据
+          // 追加数据
           let list = this.data.commentList.concat(res.data);
+          // 更新到页面
           this.setData({
             commentList: list,
             loadMore: false
           })
+
           if(res.data.length < pageSize){
             this.setData({
               loadMore: false,
               loadAll: true
             })
           }
+          console.log(this.data.commentList)
+
         }else{
+          console.log(222)
+          // 没有数据 则显示加载完毕
           this.setData({
             loadAll: true,
             loadMore: false
           })
         }
-      
-        console.log(res.data)
-        this.setData({
-          commentList: res.data
-        })
       })
   },
 
@@ -140,7 +123,20 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    console.log("上拉触底事件")
+    let that = this
+    if (!that.data.loadMore) {
+      that.setData({
+        loadMore: true, //加载中  
+        loadAll: false //是否加载完所有数据
+      });
 
+      //加载更多，这里做下延时加载
+      setTimeout(function () {
+        that.getData()
+      }, 500)
+      
+    }
   },
 
   /**
