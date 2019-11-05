@@ -100,6 +100,7 @@ Page({
    */
   onLoad: function (options) {
     this.getData();
+    console.log('回来了啊')
   },
   getData(){
     // 加载心情列表
@@ -152,6 +153,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log(getApp().globalData.newComment)
   },
 
   /**

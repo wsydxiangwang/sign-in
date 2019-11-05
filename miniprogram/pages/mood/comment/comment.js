@@ -42,6 +42,7 @@ Page({
         duration: 2000
       })
       setTimeout(function () {
+        getApp().globalData.newComment = commentData;
         wx.switchTab({
           url: '/pages/mood/mood'
         })
@@ -59,7 +60,6 @@ Page({
     const eventChannel = this.getOpenerEventChannel();
     const _this = this;
     eventChannel.on('acceptDataFromOpenerPage', function (data) {
-      console.log(data)
       _this.setData({
         moodData: data
       })

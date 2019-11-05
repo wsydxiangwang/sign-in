@@ -39,22 +39,14 @@
           <text class="view" bindtap="view">浏览{{item.view}}</text>
         </view>
 
-        <!-- <block wx:if="{{commentList}}"> -->
+        <block wx:if="{{item.comment.length > 0}}">
           <view class="comment-list">
-            <view class="comment-item">
-              <text class="comment-name">李白</text>
-              <text class="comment-content">：生命本没有任何意义，但活下去就能发现很多有趣的东西，比如你发现了一朵花，而我发现了你！！</text>
-            </view>
-            <view class="comment-item">
-              <text class="comment-name">不如吃茶去</text>
-              <text class="comment-content">：生命本没有任何意义，但活下去就能发现很多有趣的东西，比如你发现了一朵花，而我发现了你！！</text>
-            </view>
-            <view class="comment-item">
-              <text class="comment-name">陶渊明</text>
-              <text class="comment-content">：跟那个人说那么多干嘛，就是一心想推销自己东西，打心眼里认为别人都是不方便，唯我独尊的，非要改变绝大部分人的操作习惯，各种假设别人的不好用，就是铁杠精一个，直接拉黑就完事了</text>
+            <view class="comment-item" wx:for="{{item.comment}}" wx:for-item="items" wx:key="items">
+              <text class="comment-name">{{items.userName}}</text>
+              <text class="comment-content">：{{items.content}}</text>
             </view>
           </view>
-        <!-- </block> -->
+        </block>
 
       </view>
     </block>
