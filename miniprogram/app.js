@@ -17,28 +17,11 @@ App({
     }
 
 
-    var myDate = new Date(),
-        year = myDate.getFullYear(),
-        month = myDate.getMonth() + 1,
-        day = myDate.getDate(),
-        hours = myDate.getHours(),
-        min = myDate.getMinutes(),
-        sec = myDate.getSeconds();
-
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    hours = hours < 10 ? '0' + hours : hours;
-    min = min < 10 ? '0' + min : min;
-    sec = sec < 10 ? '0' + sec : sec;
-
     this.globalData = {
       openId: '',
       nickName: '',
       avatarUrl: '',
-      gender: '',
-      todayTime: `${year}${month}${day}`,
-      currentTime: `${hours}:${min}`,
-      currentDate: `${year}-${month}-${day} ${hours}:${min}:${sec}`
+      gender: ''
     },
 
     // 获取登录用户的openid
@@ -75,5 +58,24 @@ App({
         
       }
     })
+  },
+  // 时间戳
+  dateFormat(fmt){
+    let date = new Date();
+    let opt = {
+      "Y+": date.getFullYear().toString(),        // 年
+      "M+": (date.getMonth() + 1).toString(),     // 月
+      "D+": date.getDate().toString(),            // 日
+      "H+": date.getHours().toString(),           // 时
+      "m+": date.getMinutes().toString(),         // 分
+      "s+": date.getSeconds().toString()          // 秒
+    };
+    for(let k in opt) {
+      let ret = new RegExp("(" + k + ")").exec(fmt);
+      if (ret) {
+        fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+      };
+    };
+    return fmt;
   }
 })

@@ -4,11 +4,11 @@
         <textarea placeholder="留点空间给你写字" name="textarea"/>
 
         <view class="images">
-          <view class="item" wx:for="{{tempImg}}" wx:key>
+          <view class="item" wx:for="{{tempImg}}" data-index="{{index}}" wx:key bindlongpress="deleteImage">
             <image src="{{item}}" mode="aspectFill"></image>
           </view>
-          <block>
-            <view class="image-add" bindtap="uploadImgHandle"></view>
+          <block wx:if="{{tempImg.length < 9}}">
+            <view class="image-add" bindtap="chooseImage"></view>
           </block>
         </view>
 

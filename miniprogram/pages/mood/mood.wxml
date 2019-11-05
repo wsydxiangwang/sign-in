@@ -4,8 +4,8 @@
   <navigator url="/pages/publish/publish">发布心情</navigator>
 
   <view class="mood-content">
-    <block wx:if="{{commentList.length}}">
-      <view class="mood-item" wx:for="{{commentList}}" data-index="{{index}}" wx:item="item" wx:key>
+    <block wx:if="{{moodList.length}}">
+      <view class="mood-item" wx:for="{{moodList}}" data-index="{{index}}" wx:item="item" wx:key>
 
         <view class="mood-head">
           <view class="avatar">
@@ -19,39 +19,48 @@
 
         <view class="content">
           <text>{{item.content}}</text>
-          <view class="image-list {{item.image.length >= 3 ? 'three' : ''}}" data-index="{{index}}" bindtap="imageSwiper">
-            <view class="image-item" wx:for="{{item.image}}" wx:key>
-              <image src="{{item}}" mode="aspectFill"></image>
+          
+          <block wx:if="{{item.image.length > 0}}">
+            <view class="image-list {{item.image.length >= 2 ? 'two' : 'one'}}" data-index="{{index}}">
+              <view class="image-item" wx:for="{{item.image}}" wx:key="items" wx:for-item="items">
+                <image src="{{items}}" data-img="{{[items, item.image]}}" mode="aspectFill" bindtap="previewImg"></image>
+              </view>
             </view>
-          </view>
-          <view class="address">{{item.address}}</view>
+          </block>
+
+          <block wx:if="{{item.address}}">
+            <view class="address">{{item.address}}</view>
+          </block>
         </view>
 
         <view class="mood-foot">
           <text class="like" bindtap="like" data-index="{{index}}" >点赞{{item.like}}</text>
-          <text class="comment-num">{{item.commentNum}}</text>
-          <text class="comment-num">{{item.commentNum}}</text>
+          <text class="comment" bindtap="comment" data-index="{{index}}">评论{{item.comment.length}}</text>
+          <text class="view" bindtap="view">浏览{{item.view}}</text>
         </view>
+
+        <!-- <block wx:if="{{commentList}}"> -->
+          <view class="comment-list">
+            <view class="comment-item">
+              <text class="comment-name">李白</text>
+              <text class="comment-content">：生命本没有任何意义，但活下去就能发现很多有趣的东西，比如你发现了一朵花，而我发现了你！！</text>
+            </view>
+            <view class="comment-item">
+              <text class="comment-name">不如吃茶去</text>
+              <text class="comment-content">：生命本没有任何意义，但活下去就能发现很多有趣的东西，比如你发现了一朵花，而我发现了你！！</text>
+            </view>
+            <view class="comment-item">
+              <text class="comment-name">陶渊明</text>
+              <text class="comment-content">：跟那个人说那么多干嘛，就是一心想推销自己东西，打心眼里认为别人都是不方便，唯我独尊的，非要改变绝大部分人的操作习惯，各种假设别人的不好用，就是铁杠精一个，直接拉黑就完事了</text>
+            </view>
+          </view>
+        <!-- </block> -->
 
       </view>
     </block>
   </view>
 
-  <!-- 图片轮播查看 -->
-   <view class="swiper" wx:if="{{swiperList.length}}" bindtap="swiperClose">
-    <swiper bindchange="swiperChange" class="swiper-box" current="{{swiperCurrent}}">
-      <block wx:for="{{swiperList}}" data-index="{{index}}" wx:key="unique">
-        <swiper-item class="swiper-item">
-          <image src="{{item}}" mode="widthFix"></image>
-        </swiper-item>
-      </block>
-    </swiper>
-    <view class="dots">
-      <block wx:for="{{swiperList}}" data-index="{{index}}" wx:key="unique">
-        <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
-      </block>
-    </view>
-  </view>
+  
   
   <view class="loading" hidden="{{!loadMore}}">正在载入更多...</view>
   <view class="loading" hidden="{{!loadAll}}">已加载全部</view>

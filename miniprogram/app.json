@@ -5,7 +5,8 @@
     "pages/ranking/ranking",
     "pages/mood/mood",
     "pages/login/login",
-    "pages/publish/publish"
+    "pages/publish/publish",
+    "pages/mood/comment/comment"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

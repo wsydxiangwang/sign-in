@@ -5,40 +5,95 @@ let currentPage = 0, // 当前第几页 0表示第一页
     pageSize = 10;   // 每页显示的数据
 Page({
   data: {
-    commentList: [], // 心情列表
-    swiperList: [], // 当前轮播图片
-    swiperCurrent: 0,
+    moodList: [], // 心情列表
     loadMore: false,
-    loadAll: false
-  },
-  // 查看当前图片组
-  imageSwiper: function(e){
-    let index = e.currentTarget.dataset.index;
-    let image = this.data.commentList[index].image;
-
-    // 获取当前图片数组
-    this.setData({
-      swiperList: image
-    })
+    loadAll: false,
 
   },
-  // 轮播图切换事件 定位指示点
-  swiperChange: function(e){
-    this.setData({
-      swiperCurrent: e.detail.current
+  // 预览图片
+  previewImg: function(e){
+    let imgData = e.currentTarget.dataset.img;
+    wx.previewImage({
+      current: imgData[0], // 当前显示图片
+      urls: imgData[1] // 需要预览的图片
     })
   },
-  // 关闭图片
-  swiperClose: function(e){
-    this.setData({
-      swiperCurrent: 0,
-      swiperList: []
-    })
-  },
+
   // 点赞
   like: function(e){
-    console.log(e)
-    // console.log(e.currentTarget.dataset.index)
+    let _this = this;
+    let index = e.currentTarget.dataset.index;
+    let num = this.data.moodList[index];
+    let arr = 'moodList[' + index + '].like';
+    let likeId = num._id;
+
+    wx.getStorage({
+      key: `likeId-${likeId}`,
+      success(res) {
+        // 已点赞
+        wx.showToast({
+          icon: "none",
+          title: '每人只能给予一次鼓励哦～',
+        })
+        return false;
+      },
+      fail(err){
+        // 未点赞
+        wx.setStorageSync(`likeId-${likeId}`, 'true'); // 设置缓存
+
+        _this.setData({  // 更新页面
+          [arr]: num.like + 1
+        })
+
+        // 调用云函数更新
+        wx.cloud.callFunction({
+          name: 'mood',
+          data: {
+            action: 'like',
+            id: num._id
+          }
+        }).then(res => {
+          console.log('update: ' + res.result.stats.updated)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    })
+  },
+  // 评论
+  comment: function(e){
+    let index = e.currentTarget.dataset.index;
+    let currentMood = this.data.moodList[index];
+
+    // 获取用户信息
+    wx.getSetting({
+      complete: function (res) {
+        if (res.authSetting['scope.userInfo']) { // 已授权
+          
+          // 传递当前的心情数据
+          wx.navigateTo({
+            url: 'comment/comment',
+            success(res) {
+              res.eventChannel.emit('acceptDataFromOpenerPage', currentMood)
+            }
+          })
+
+        }else{
+          // 未授权则进入授权页面
+          wx.navigateTo({
+            url: '../login/login'
+          })
+        }
+      }
+    })
+    
+  },
+  view: function(e){
+    wx.getStorageInfo({
+      success(res){
+        console.log(res)
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -49,6 +104,7 @@ Page({
   getData(){
     // 加载心情列表
     db.collection('comment')
+      .orderBy('createTime', 'desc')
       .skip(currentPage * pageSize)
       .limit(pageSize)
       .get()
@@ -59,10 +115,10 @@ Page({
         if(res.data && res.data.length > 0){
           currentPage++; // +1 方可获取下一页数据
           // 追加数据
-          let list = this.data.commentList.concat(res.data);
+          let list = this.data.moodList.concat(res.data);
           // 更新到页面
           this.setData({
-            commentList: list,
+            moodList: list,
             loadMore: false
           })
 
@@ -72,7 +128,7 @@ Page({
               loadAll: true
             })
           }
-          console.log(this.data.commentList)
+          console.log(this.data.moodList)
 
         }else{
           console.log(222)

@@ -11,27 +11,41 @@ Page({
     fileIDs: [],
     address: '',  // 定位
   },
-  // 上传图片到页面
-  uploadImgHandle: function(e){
+  // 选择图片
+  chooseImage: function(e){
     let _this = this;
+
     // 选择图片
     wx.chooseImage({
-      count: 9,
+      count: 9 - this.data.tempImg.length,
       sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
+      sourceType: ['album'],
       success(res){
-        let tempFilePaths = res.tempFilePaths; // 临时图片
-        // 如果有图片 则累加
         if (_this.data.tempImg) {
-          let tempImgAdd = _this.data.tempImg.concat(tempFilePaths);
-          // 更新页面图片
           _this.setData({
-            tempImg: tempImgAdd
+            tempImg: _this.data.tempImg.concat(res.tempFilePaths)
           })
         } else {
-          // 图片显示到页面
           _this.setData({
             tempImg: tempFilePaths
+          })
+        }
+      }
+    })
+  },
+  // 删除图片
+  deleteImage: function(e){
+    let index = e.currentTarget.dataset.index;
+    wx.showModal({
+      title: '要删除这张照片吗？',
+      content: '',
+      cancelText: '取消',
+      confirmText: '确定',
+      success: res => {
+        if (res.confirm){
+          this.data.tempImg.splice(index, 1);
+          this.setData({
+            tempImg: this.data.tempImg
           })
         }
       }
@@ -74,24 +88,34 @@ Page({
   },
   // 发布心情
   bindFormSubmit: function (e) {
+    if (!e.detail.value.textarea){
+      wx.showToast({
+        icon: "none",
+        title: '嘿嘿，要分享此刻的心情哦～',
+      })
+      return;
+    }
+
+
     wx.showLoading({
-      title: '提交中',
+      title: '您的心情正在游历全世界～～',
     })
+
     let data = {
       openId: app.globalData.openId,       // ID
       userName: app.globalData.nickName,   // 昵称
       avatarUrl: app.globalData.avatarUrl, // 头像
-      time: app.globalData.currentDate,    // 时间
       content: e.detail.value.textarea,    // 内容
+      address: this.data.address, // 地址
+      createTime: db.serverDate(), // 服务端时间
+      view: 0,      // 查看
       like: 0,      // 点赞
       comment: [],  // 评论
-      address: this.data.address
     }
 
     if(this.data.tempImg){ // 发表图片
     
       let promiseArr = [];
-      this.data.fileIDs = [];  // 初始化
 
       //只能一张张上传 遍历临时的图片数组
       for (let i = 0; i < this.data.tempImg.length; i++) {
@@ -119,53 +143,82 @@ Page({
         }))
 
       }
+
       // 所有图片上传后执行
       Promise.all(promiseArr).then(res => {
-        // 添加图片到数据列表
+
         data.image = this.data.fileIDs;
-        console.log(data)
+        data.time = app.dateFormat('YYYY-MM-DD HH:mm')    // 时间与服务端一致
 
         db.collection('comment').add({
           data: data
         }).then(res => {
           wx.hideLoading()
           wx.showToast({
-            title: '提交成功',
+            icon: "none",
+            title: '心情发布成功，每天都要开心哦，加油～～',
+            duration: 2000
           })
-          console.log('发表成功')
-          wx.navigateBack()
+          setTimeout(function () {
+            wx.switchTab({
+              url: '/pages/mood/mood'
+            })
+          }, 2000)
         }).catch(err => {
-          console.log('发表失败')
-          console.log(err)
+          wx.hideLoading();
+          wx.showToast({
+            icon: 'none',
+            title: '心情发布失败，可能是网络原因哦，再试一遍～～',
+            duration: 2000
+          });
+
+          console.log(err);
         })
       }).catch(err => {
         console.log(err)
       })
+
     } else {
-      console.log(data)
+
+      data.time = app.dateFormat('YYYY/MM/DD HH:mm:ss')    // 时间与服务端一致
+
       // 不发表图片 直接添加数据
       db.collection('comment').add({
         data: data
       }).then(res => {
         wx.hideLoading()
         wx.showToast({
-          title: '提交成功',
+          icon: "none",
+          title: '心情发布成功，每天都要开心哦，加油～～',
+          duration: 2000
         })
-        console.log('发表成功')
-        wx.navigateBack()
+        setTimeout(function () {
+          console.log('setTimeout')
+          // wx.switchTab({
+          //   url: '/pages/mood/mood',
+          //   success: function(res){
+              
+          //     onShow: function(){
+          //       this.onLoad()
+          //     }
+          //   }
+          // })
+          wx.reLaunch({
+            url: '/pages/mood/mood'
+          })
+        }, 2000)
       }).catch(err => {
-        console.log('发表失败')
-        console.log(err)
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '心情发布失败，可能是网络原因哦，再试一遍～～',
+          duration: 2000
+        });
+
+        console.log(err);
       })
     }
   },
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
