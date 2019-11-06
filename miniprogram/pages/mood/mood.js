@@ -61,15 +61,17 @@ Page({
     })
   },
   // 评论
-  comment: function(e){
+  comment: function (e) {
     let index = e.currentTarget.dataset.index;
-    let currentMood = this.data.moodList[index];
+    let currentMood = {};
+
+    currentMood.index = index;
+    currentMood.data = this.data.moodList[index];
 
     // 获取用户信息
     wx.getSetting({
       complete: function (res) {
         if (res.authSetting['scope.userInfo']) { // 已授权
-          
           // 传递当前的心情数据
           wx.navigateTo({
             url: 'comment/comment',
@@ -99,10 +101,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    currentPage = 0;
+    pageSize = 10;
     this.getData();
-    console.log('回来了啊')
   },
-  getData(){
+  ss:function(){
+    this.onLoad()
+  },
+  getData() {
+    console.log(currentPage, pageSize)
+
     // 加载心情列表
     db.collection('comment')
       .orderBy('createTime', 'desc')
@@ -130,6 +138,7 @@ Page({
             })
           }
           console.log(this.data.moodList)
+          console.log(currentPage, pageSize)
 
         }else{
           console.log(222)
@@ -146,14 +155,28 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(getApp().globalData.newComment)
+    if (getApp().globalData.newComment){
+      let index = getApp().globalData.newComment.index;
+      let data = getApp().globalData.newComment.data;
+      let comment = this.data.moodList[index].comment.concat(data);
+      let arr = 'moodList[' + index + '].comment';
+      // 评论实时更新
+      this.setData({
+        [arr]: comment
+      })
+    }
+    console.log(111111111)
+
+    if (getApp().globalData.publish){
+      console.log(22222)
+      this.onLoad();
+    }
   },
 
   /**
@@ -174,7 +197,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    currentPage = 0;
+    pageSize = 10;
+    this.getData();
   },
 
   /**

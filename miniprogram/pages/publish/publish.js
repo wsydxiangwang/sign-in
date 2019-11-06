@@ -97,9 +97,9 @@ Page({
     }
 
 
-    wx.showLoading({
-      title: '您的心情正在游历全世界～～',
-    })
+    // wx.showLoading({
+    //   title: '您的心情正在游历全世界～～',
+    // })
 
     let data = {
       openId: app.globalData.openId,       // ID
@@ -113,7 +113,7 @@ Page({
       comment: [],  // 评论
     }
 
-    if(this.data.tempImg){ // 发表图片
+    if(this.data.tempImg.length > 0){ // 发表图片
     
       let promiseArr = [];
 
@@ -159,10 +159,18 @@ Page({
             title: '心情发布成功，每天都要开心哦，加油～～',
             duration: 2000
           })
+
+          console.log(22222)
           setTimeout(function () {
+            // getApp().globalData.publish = true;
+            // wx.switchTab({
+            //   url: '/pages/mood/mood'
+            // })
             wx.switchTab({
               url: '/pages/mood/mood'
             })
+
+            console.log(2)
           }, 2000)
         }).catch(err => {
           wx.hideLoading();
@@ -192,21 +200,19 @@ Page({
           title: '心情发布成功，每天都要开心哦，加油～～',
           duration: 2000
         })
+
         setTimeout(function () {
-          console.log('setTimeout')
+          // getApp().globalData.publish = true;
           // wx.switchTab({
-          //   url: '/pages/mood/mood',
-          //   success: function(res){
-              
-          //     onShow: function(){
-          //       this.onLoad()
-          //     }
-          //   }
+          //   url: '/pages/mood/mood'
           // })
           wx.reLaunch({
             url: '/pages/mood/mood'
           })
+
+          console.log(2)
         }, 2000)
+        
       }).catch(err => {
         wx.hideLoading();
         wx.showToast({

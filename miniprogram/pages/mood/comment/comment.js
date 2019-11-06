@@ -15,7 +15,8 @@ Page({
       title: '路途遥远，正在为你加快脚步中...',
     })
 
-    let id = this.data.moodData._id;
+    let _this = this;
+    let id = this.data.moodData.data._id;
     let commentData = {
       userName: app.globalData.nickName,   // 昵称
       avatarUrl: app.globalData.avatarUrl, // 头像
@@ -42,7 +43,10 @@ Page({
         duration: 2000
       })
       setTimeout(function () {
-        getApp().globalData.newComment = commentData;
+        let data = {};
+        data.index = _this.data.moodData.index;
+        data.data = commentData;
+        getApp().globalData.newComment = data;
         wx.switchTab({
           url: '/pages/mood/mood'
         })
