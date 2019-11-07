@@ -101,16 +101,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    currentPage = 0;
-    pageSize = 10;
     this.getData();
   },
-  ss:function(){
-    this.onLoad()
-  },
   getData() {
-    console.log(currentPage, pageSize)
-
+    console.log(currentPage, currentPage * pageSize)
     // 加载心情列表
     db.collection('comment')
       .orderBy('createTime', 'desc')
@@ -118,8 +112,6 @@ Page({
       .limit(pageSize)
       .get()
       .then(res => {
-        console.log(res.data)
-
         // 有数据
         if(res.data && res.data.length > 0){
           currentPage++; // +1 方可获取下一页数据
@@ -137,11 +129,11 @@ Page({
               loadAll: true
             })
           }
-          console.log(this.data.moodList)
-          console.log(currentPage, pageSize)
+
+          console.log(currentPage)
+          console.log(list)
 
         }else{
-          console.log(222)
           // 没有数据 则显示加载完毕
           this.setData({
             loadAll: true,
@@ -171,7 +163,6 @@ Page({
         [arr]: comment
       })
     }
-    console.log(111111111)
 
     if (getApp().globalData.publish){
       console.log(22222)
@@ -197,9 +188,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    wx.showToast({
+      title: '正在刷新数据...',
+      icon: 'loading',
+      duration: 2000
+    });
     currentPage = 0;
-    pageSize = 10;
+    this.setData({
+      moodList: []
+    })
     this.getData();
+    wx: wx.stopPullDownRefresh();//停止刷新操作
   },
 
   /**
