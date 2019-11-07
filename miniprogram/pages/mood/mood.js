@@ -104,7 +104,7 @@ Page({
     this.getData();
   },
   getData() {
-    console.log(currentPage, currentPage * pageSize)
+    // console.log(currentPage, currentPage * pageSize)
     // 加载心情列表
     db.collection('comment')
       .orderBy('createTime', 'desc')
@@ -130,7 +130,7 @@ Page({
             })
           }
 
-          console.log(currentPage)
+          // console.log(currentPage)
           console.log(list)
 
         }else{

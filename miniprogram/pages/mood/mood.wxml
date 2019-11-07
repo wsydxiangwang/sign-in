@@ -1,6 +1,5 @@
 <!--miniprogram/pages/mood/mood.wxml-->
 <view class="container">
-<button bindtap="ss">ssssssssssss</button>
   <navigator url="/pages/publish/publish">发布心情</navigator>
 
   <view class="mood-content">

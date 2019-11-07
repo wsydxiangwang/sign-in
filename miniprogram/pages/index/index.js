@@ -37,24 +37,24 @@ Page({
                 return;
               }
 
-              if (hours >= 0 && hours < 5) {
-                // 未到签到时间
-                wx.showToast({
-                  title: '未到签到时间',
-                  duration: 2000
-                })
-                return;
-              } else if (hours >= 9 && hours < 24) {
-                // 签到时间已过
-                wx.showToast({
-                  title: '今天签到时间已过',
-                  icon: 'none',
-                  duration: 2000
-                })
-                return;
-              } else {
-                console.log('签到时间')
-              }
+              // if (hours >= 0 && hours < 5) {
+              //   // 未到签到时间
+              //   wx.showToast({
+              //     title: '未到签到时间',
+              //     duration: 2000
+              //   })
+              //   return;
+              // } else if (hours >= 9 && hours < 24) {
+              //   // 签到时间已过
+              //   wx.showToast({
+              //     title: '今天签到时间已过',
+              //     icon: 'none',
+              //     duration: 2000
+              //   })
+              //   return;
+              // } else {
+              //   console.log('签到时间')
+              // }
               
               // 调用云函数进行更新 加一天
               wx.cloud.callFunction({

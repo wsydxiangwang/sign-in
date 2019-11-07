@@ -62,7 +62,7 @@ Page({
         _this.getLocal(latitude, longitude)
       },
       fail(err){
-        console.log('fail' + err)
+        console.log('fail:', err)
       }
     })
   },
@@ -82,7 +82,7 @@ Page({
         })
       },
       fail(res){
-        console.log('fail' + res)
+        console.log('fail:', res)
       }
     })
   },
@@ -97,9 +97,9 @@ Page({
     }
 
 
-    // wx.showLoading({
-    //   title: '您的心情正在游历全世界～～',
-    // })
+    wx.showLoading({
+      title: '您的心情正在游历全世界～～',
+    })
 
     let data = {
       openId: app.globalData.openId,       // ID
@@ -159,18 +159,16 @@ Page({
             title: '心情发布成功，每天都要开心哦，加油～～',
             duration: 2000
           })
-
-          console.log(22222)
           setTimeout(function () {
-            // getApp().globalData.publish = true;
-            // wx.switchTab({
-            //   url: '/pages/mood/mood'
-            // })
+            // 发表成功回到心情页面，并更新数据
             wx.switchTab({
-              url: '/pages/mood/mood'
+              url: '/pages/mood/mood',
+              success: function (e) {
+                var page = getCurrentPages().pop();
+                if (page == undefined || page == null) return;
+                page.onPullDownRefresh();
+              }
             })
-
-            console.log(2)
           }, 2000)
         }).catch(err => {
           wx.hideLoading();
@@ -200,19 +198,17 @@ Page({
           title: '心情发布成功，每天都要开心哦，加油～～',
           duration: 2000
         })
-
         setTimeout(function () {
-          // getApp().globalData.publish = true;
-          // wx.switchTab({
-          //   url: '/pages/mood/mood'
-          // })
-          wx.reLaunch({
-            url: '/pages/mood/mood'
+          // 发表成功回到心情页面，并更新数据
+          wx.switchTab({
+            url: '/pages/mood/mood',
+            success: function(e) {
+              var page = getCurrentPages().pop();
+              if (page == undefined || page == null) return;
+              page.onPullDownRefresh();
+            }
           })
-
-          console.log(2)
         }, 2000)
-        
       }).catch(err => {
         wx.hideLoading();
         wx.showToast({
