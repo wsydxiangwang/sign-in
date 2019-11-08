@@ -1,9 +1,10 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk');
-const db = cloud.database(); // 初始化数据库
-const _ = db.command;
 
 cloud.init();
+
+const db = cloud.database(); // 初始化数据库
+const _ = db.command;
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -28,14 +29,10 @@ exports.main = async (event, context) => {
     }
     case 'today': {
       try {
-        return await db.collection('userInfo')
-          .where({
-            _openid: wxContext.OPENID
-          })
+        return await db.collection('today').doc(event._id)
           .update({
             data: {
-              count: _.inc(1),
-              lastTime: event.lastTime
+              data: _.push(event.dataList)
             }
           })
       } catch (e) {

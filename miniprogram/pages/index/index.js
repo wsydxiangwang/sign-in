@@ -9,11 +9,7 @@ Page({
   singnin: function(e){
 
     let _this = this;
-
-    var myDate = new Date(),
-        hours = myDate.getHours();
-
-    hours: hours < 10 ? '0' + hours : hours;
+    let time = app.dateFormat('YYYY-MM-DD');
 
     // 获取用户信息
     wx.getSetting({
@@ -26,7 +22,7 @@ Page({
           })
             .get().then(res => {
 
-              console.log(app.dateFormat('YYYYMMDD'))
+              
 
               // 判断今天是否签到
               // if (res.data[0].lastTime == app.globalData.todayTime){
@@ -62,7 +58,7 @@ Page({
                 name: 'signin',
                 data: {
                   action: 'count',
-                  lastTime: app.dateFormat('YYYY-MM-DD')
+                  lastTime: time
                 }
               }).then(res => {
                 console.log('签到成功+1天')
@@ -72,23 +68,27 @@ Page({
                 console.log(err)
               })
 
+
+              let data = {
+                currentTime: app.dateFormat('HH:mm'),
+                openid: app.globalData.openId,
+                nickName: app.globalData.nickName,
+                avatarUrl: app.globalData.avatarUrl,
+                gender: app.globalData.gender
+              }
+
               // 今日排行榜
-              db.collection('today').doc(app.dateFormat('YYYYMMDD'))
+              db.collection('today').doc(time)
                 .get()
                 .then(res => {
 
                   // 添加信息到今日排行榜
                   wx.cloud.callFunction({
-                    name: 'updateToday',
+                    name: 'signin',
                     data: {
-                      _id: app.globalData.todayTime,
-                      dataList: {
-                        currentTime: app.globalData.currentTime,
-                        openid: app.globalData.openId,
-                        nickName: app.globalData.nickName,
-                        avatarUrl: app.globalData.avatarUrl,
-                        gender: app.globalData.gender
-                      }
+                      action: 'today',
+                      _id: time,
+                      dataList: data
                     }
                   }).then(res => {
                     console.log('添加信息到今日排行榜成功')
@@ -100,16 +100,8 @@ Page({
                   // 创建今日排行榜
                   db.collection('today').add({
                     data: {
-                      _id: app.globalData.todayTime,
-                      data: [
-                        {
-                          currentTime: app.globalData.currentTime,
-                          openid: app.globalData.openId,
-                          nickName: app.globalData.nickName,
-                          avatarUrl: app.globalData.avatarUrl,
-                          gender: app.globalData.gender
-                        }
-                      ]
+                      _id: time,
+                      data: [data]
                     }
                   }).then(res => {
                     console.log('创建今日排行榜成功')

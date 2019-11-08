@@ -15,8 +15,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     // 获取当天排行榜
-    db.collection('today').doc(app.globalData.todayTime)
+    db.collection('today').doc(app.dateFormat('YYYY-MM-DD'))
     .get()
     .then(res => {
       this.setData({

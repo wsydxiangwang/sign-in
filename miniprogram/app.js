@@ -49,7 +49,7 @@ App({
                 nickName: res.userInfo.nickName,
                 gender: res.userInfo.gender
               }
-              // console.log(_this.globalData)
+              console.log(_this.globalData)
             }
           })
         }else{
