@@ -19,7 +19,6 @@ Page({
     wx.getSetting({
       complete: function (res) {
         if (res.authSetting['scope.userInfo']) { // 已授权
-          console.log('已授权')
 
           // 获取当前用户的签到次数
           db.collection('userInfo').where({
@@ -27,15 +26,17 @@ Page({
           })
             .get().then(res => {
 
+              console.log(app.dateFormat('YYYYMMDD'))
+
               // 判断今天是否签到
-              if (res.data[0].lastTime == app.globalData.todayTime){
-                wx.showToast({
-                  title: '今天已签到！！',
-                  icon: 'none',
-                  duration: 2000
-                })
-                return;
-              }
+              // if (res.data[0].lastTime == app.globalData.todayTime){
+              //   wx.showToast({
+              //     title: '今天已签到！！',
+              //     icon: 'none',
+              //     duration: 2000
+              //   })
+              //   return;
+              // }
 
               // if (hours >= 0 && hours < 5) {
               //   // 未到签到时间
@@ -58,10 +59,10 @@ Page({
               
               // 调用云函数进行更新 加一天
               wx.cloud.callFunction({
-                name: 'updateCount',
+                name: 'signin',
                 data: {
-                  openid: app.globalData.openId,
-                  lastTime: app.globalData.todayTime
+                  action: 'count',
+                  lastTime: app.dateFormat('YYYY-MM-DD')
                 }
               }).then(res => {
                 console.log('签到成功+1天')
@@ -72,7 +73,7 @@ Page({
               })
 
               // 今日排行榜
-              db.collection('today').doc(app.globalData.todayTime)
+              db.collection('today').doc(app.dateFormat('YYYYMMDD'))
                 .get()
                 .then(res => {
 

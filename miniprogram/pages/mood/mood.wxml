@@ -1,6 +1,6 @@
 <!--miniprogram/pages/mood/mood.wxml-->
 <view class="container">
-  <navigator url="/pages/publish/publish">发布心情</navigator>
+  <view bindtap="publish">发布心情</view>
 
   <view class="mood-content">
     <block wx:if="{{moodList.length}}">

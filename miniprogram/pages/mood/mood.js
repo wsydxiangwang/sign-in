@@ -10,6 +10,25 @@ Page({
     loadAll: false,
 
   },
+  publish: function(e){
+    // 获取用户信息
+    wx.getSetting({
+      complete: function (res) {
+        if (res.authSetting['scope.userInfo']) { // 已授权
+          wx.navigateTo({
+            url: '/pages/publish/publish'
+          })
+        }else{
+          // 未授权则进入授权页面
+          wx.navigateTo({
+            url: '/pages/login/login'
+          })
+        }
+      }
+    })
+
+    
+  },
   // 预览图片
   previewImg: function(e){
     let imgData = e.currentTarget.dataset.img;
