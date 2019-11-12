@@ -1,8 +1,16 @@
 <view class="container">
-<view class="info">
-  <open-data type="userAvatarUrl"></open-data>
-  <open-data type="userNickName"></open-data>
-</view>
-<button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button> 
-<button bindtap="getOpenId">获取数据</button> 
+  <view class="info">
+    <view class="avatar">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <view class="name">
+      <open-data type="userNickName"></open-data>
+    </view>
+    <view class="signature">永远相信美好的事情即将发生</view>
+  </view>
+  <!-- <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>  -->
+  <view class="mood" bindtap="mood">我的心情</view>
+  <view class="calendar" bindtap="calendar">打卡日历</view>
+  <view>意见反馈</view>
+  <view>关于作者</view>
 </view>

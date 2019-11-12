@@ -75,6 +75,20 @@
 					"id": -1,
 					"name": "pages/publish/publish",
 					"pathName": "pages/publish/publish",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/centre/myMood/myMood",
+					"pathName": "pages/centre/myMood/myMood",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/centre/calendar/calendar",
+					"pathName": "pages/centre/calendar/calendar",
 					"scene": null
 				}
 			]

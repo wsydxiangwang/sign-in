@@ -20,7 +20,8 @@ exports.main = async (event, context) => {
           .update({
             data: {
               count: _.inc(1),
-              lastTime: event.lastTime
+              lastTime: event.lastTime,
+              // timeList: _.push(event.timeList)
             }
           })
       } catch (e) {
@@ -29,10 +30,26 @@ exports.main = async (event, context) => {
     }
     case 'today': {
       try {
-        return await db.collection('today').doc(event._id)
+        return await db.collection('today')
+          .doc(event._id)
           .update({
             data: {
               data: _.push(event.dataList)
+            }
+          })
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    // 今日排行榜点赞
+    case 'like': {
+      let arr = 'data.' + event.index + '.like';
+      try {
+        return await db.collection('today')
+          .doc(event._id)
+          .update({
+            data: {
+              [arr]: _.inc(1)
             }
           })
       } catch (e) {

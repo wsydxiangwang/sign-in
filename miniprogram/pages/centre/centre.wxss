@@ -1,1 +1,13 @@
-/* miniprogram/pages/centre/centre.wxss */
+.info{
+  text-align: center;
+}
+.info .avatar{
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+}
+.info .name{
+  color: #000;
+}

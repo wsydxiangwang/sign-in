@@ -10,12 +10,26 @@ Page({
 
     let _this = this;
     let time = app.dateFormat('YYYY-MM-DD');
+    let hours = app.dateFormat('HH');
 
     // 获取用户信息
     wx.getSetting({
       complete: function (res) {
         if (res.authSetting['scope.userInfo']) { // 已授权
 
+          // db.collection('userInfo').where({
+          //   _openid: app.globalData.openId
+          // })
+          //   .get()
+          //   .then(res => {
+          //     let obj = res.data[0].timeList;
+
+          //     Object.keys(obj)
+
+          //     console.log(Object.keys(obj))
+          //   })
+
+          //   return false;
           // 获取当前用户的签到次数
           db.collection('userInfo').where({
             _openid: app.globalData.openId
@@ -23,42 +37,43 @@ Page({
             .get().then(res => {
 
               
-
+              
               // 判断今天是否签到
-              // if (res.data[0].lastTime == app.globalData.todayTime){
-              //   wx.showToast({
-              //     title: '今天已签到！！',
-              //     icon: 'none',
-              //     duration: 2000
-              //   })
-              //   return;
-              // }
+              if (res.data[0].lastTime == time){
+                wx.showToast({
+                  title: '今天已签到！！',
+                  icon: 'none',
+                  duration: 2000
+                })
+                return;
+              }
 
-              // if (hours >= 0 && hours < 5) {
-              //   // 未到签到时间
-              //   wx.showToast({
-              //     title: '未到签到时间',
-              //     duration: 2000
-              //   })
-              //   return;
-              // } else if (hours >= 9 && hours < 24) {
-              //   // 签到时间已过
-              //   wx.showToast({
-              //     title: '今天签到时间已过',
-              //     icon: 'none',
-              //     duration: 2000
-              //   })
-              //   return;
-              // } else {
-              //   console.log('签到时间')
-              // }
+              if (hours >= 0 && hours < 5) {
+                // 未到签到时间
+                wx.showToast({
+                  title: '未到签到时间',
+                  duration: 2000
+                })
+                return;
+              } else if (hours >= 9 && hours < 24) {
+                // 签到时间已过
+                wx.showToast({
+                  title: '今天签到时间已过',
+                  icon: 'none',
+                  duration: 2000
+                })
+                return;
+              } else {
+                console.log('签到时间')
+              }
               
               // 调用云函数进行更新 加一天
               wx.cloud.callFunction({
                 name: 'signin',
                 data: {
                   action: 'count',
-                  lastTime: time
+                  lastTime: time,
+                  timeList: time
                 }
               }).then(res => {
                 console.log('签到成功+1天')
@@ -74,7 +89,8 @@ Page({
                 openid: app.globalData.openId,
                 nickName: app.globalData.nickName,
                 avatarUrl: app.globalData.avatarUrl,
-                gender: app.globalData.gender
+                gender: app.globalData.gender,
+                like: 0
               }
 
               // 今日排行榜
@@ -142,16 +158,20 @@ Page({
     // 获取用户信息
     wx.getSetting({
       success: function (res) {
+        console.log(app.globalData.openId)
         if (res.authSetting['scope.userInfo']) {
+          console.log('已授权')
           // 获取当前用户的签到次数
           db.collection('userInfo').where({
             _openid: app.globalData.openId
           })
             .get()
             .then(res => {
+              console.log(res)
               _this.setData({
                 count: res.data[0].count
               })
+              console.log(res.data[0])
             })
             .catch(err => {
               console.log(err)
@@ -160,6 +180,7 @@ Page({
       }
     })
 
+    
 
   },
 

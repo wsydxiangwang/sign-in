@@ -5,20 +5,27 @@ let currentPage = 0, // 当前第几页 0表示第一页
     pageSize = 10;   // 每页显示的数据
 
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
     moodList: [], // 心情列表
     loadMore: false,
     loadAll: false,
   },
-  publish: function(e){
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let _this = this;
     // 获取用户信息
     wx.getSetting({
       complete: function (res) {
         if (res.authSetting['scope.userInfo']) { // 已授权
-          wx.navigateTo({
-            url: '/pages/publish/publish'
-          })
-        }else{
+          _this.getData();
+        } else {
           // 未授权则进入授权页面
           wx.navigateTo({
             url: '/pages/login/login'
@@ -26,111 +33,14 @@ Page({
         }
       }
     })
-
-    
-  },
-  // 预览图片
-  previewImg: function(e){
-    let imgData = e.currentTarget.dataset.img;
-    wx.previewImage({
-      current: imgData[0], // 当前显示图片
-      urls: imgData[1] // 需要预览的图片
-    })
-  },
-
-  // 点赞
-  like: function(e){
-    let _this = this;
-    let index = e.currentTarget.dataset.index;
-    let num = this.data.moodList[index];
-    let arr = 'moodList[' + index + '].like';
-    let moodLike = num._id;
-
-    wx.getStorage({
-      key: `moodLike-${moodLike}`,
-      success(res) {
-        // 已点赞
-        wx.showToast({
-          icon: "none",
-          title: '每人只能给予一次鼓励哦～',
-        })
-        return false;
-      },
-      fail(err){
-        // 未点赞
-        wx.setStorageSync(`moodLike-${moodLike}`, 'true'); // 设置缓存
-
-        _this.setData({  // 更新页面
-          [arr]: num.like + 1
-        })
-
-        // 调用云函数更新
-        wx.cloud.callFunction({
-          name: 'mood',
-          data: {
-            action: 'like',
-            id: num._id
-          }
-        }).then(res => {
-          console.log('update: ' + res.result.stats.updated)
-        }).catch(err => {
-          console.log(err)
-        })
-      }
-    })
-  },
-  // 评论
-  comment: function (e) {
-    let index = e.currentTarget.dataset.index;
-    let currentMood = {};
-
-    currentMood.index = index;
-    currentMood.data = this.data.moodList[index];
-
-    // 获取用户信息
-    wx.getSetting({
-      complete: function (res) {
-        if (res.authSetting['scope.userInfo']) { // 已授权
-          // 传递当前的心情数据
-          wx.navigateTo({
-            url: 'comment/comment',
-            success(res) {
-              res.eventChannel.emit('acceptDataFromOpenerPage', currentMood)
-            }
-          })
-
-        }else{
-          // 未授权则进入授权页面
-          wx.navigateTo({
-            url: '../login/login'
-          })
-        }
-      }
-    })
-    
-  },
-  // 回复评论
-  reply: function(e){
-    console.log(e)
-  },
-  // 预览图片
-  view: function(e){
-    wx.getStorageInfo({
-      success(res){
-        console.log(res)
-      }
-    })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    this.getData();
   },
   getData() {
-    // console.log(currentPage, currentPage * pageSize)
     // 加载心情列表
+    console.log(app.globalData.openId)
     db.collection('comment')
+      .where({
+        _openid: app.globalData.openId
+      })
       .orderBy('createTime', 'desc')
       .skip(currentPage * pageSize)
       .limit(pageSize)
@@ -138,10 +48,10 @@ Page({
       .then(res => {
 
         // 有数据
-        if(res.data && res.data.length > 0){
+        if (res.data && res.data.length > 0) {
 
           currentPage++; // +1 方可获取下一页数据
-          
+
           // 时间戳转换 再追加数据
           res.data.forEach((item) => {
             item.createTime = this.timestampFormat(item.createTime)
@@ -154,7 +64,7 @@ Page({
             loadMore: false
           })
 
-          if(res.data.length < pageSize){
+          if (res.data.length < pageSize) {
             this.setData({
               loadMore: false,
               loadAll: true
@@ -162,7 +72,7 @@ Page({
           }
           // console.log(list)
 
-        }else{
+        } else {
           // 没有数据 则显示加载完毕
           this.setData({
             loadAll: true,
@@ -171,9 +81,9 @@ Page({
         }
       })
   },
-  timestampFormat: function(timestamp) {
+  timestampFormat: function (timestamp) {
     function zeroize(num) {
-      return(String(num).length == 1 ? '0' : '') + num;
+      return (String(num).length == 1 ? '0' : '') + num;
     };
 
     var curTimestamp = parseInt(new Date().getTime() / 1000);
@@ -207,22 +117,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (getApp().globalData.newComment){
-      let index = getApp().globalData.newComment.index;
-      let data = getApp().globalData.newComment.data;
-      let comment = this.data.moodList[index].comment.concat(data);
-      let arr = 'moodList[' + index + '].comment';
-      // 评论实时更新
-      this.setData({
-        [arr]: comment
-      })
-    }
+
   },
 
   /**
@@ -243,17 +145,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    wx.showToast({
-      title: '正在刷新数据...',
-      icon: 'loading',
-      duration: 2000
-    });
-    currentPage = 0;
-    this.setData({
-      moodList: []
-    })
-    this.getData();
-    wx: wx.stopPullDownRefresh();//停止刷新操作
+
   },
 
   /**
@@ -272,7 +164,7 @@ Page({
       setTimeout(function () {
         that.getData()
       }, 500)
-      
+
     }
   },
 

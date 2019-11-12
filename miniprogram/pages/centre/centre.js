@@ -12,6 +12,16 @@ Page({
       console.log('拒绝')
     }
   },
+  mood: function(e){
+    wx.navigateTo({
+      url: 'myMood/myMood'
+    })
+  },
+  calendar: function(e){
+    wx.navigateTo({
+      url: 'calendar/calendar'
+    })
+  },
   // 
   getOpenId: function(e){
     

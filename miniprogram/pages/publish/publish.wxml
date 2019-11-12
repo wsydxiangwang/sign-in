@@ -12,10 +12,8 @@
           </block>
         </view>
 
-        <view class="location" bindtap="location">获取位置</view>
-
-        <view>{{address}}</view>
-
+        <view class="location" bindtap="location">{{address ? address : '获取位置'}}</view>
+        
         <button form-type="submit"> 提交 </button>
       </form>
     </view>

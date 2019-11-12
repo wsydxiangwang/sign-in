@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="my-mood">
+    <view class="header">
+    
+    </view>
+    <block wx:if="{{moodList.length}}">
+      <view class="content">
+        <view class="item" wx:for="{{moodList}}" data-index="{{index}}" wx:item="item" wx:key>
+          <view class="mood-head">
+            <view class="avatar">
+              <image src="{{item.avatarUrl}}" mode="widthFix"></image>
+            </view>
+            <view class="title">
+              <text class="name">{{item.userName}}</text>
+              <text class="time">{{item.createTime}}</text>
+            </view>
+          </view>
+
+          <view class="content">
+            <text>{{item.content}}</text>
+            
+            <block wx:if="{{item.image.length > 0}}">
+              <view class="image-list {{item.image.length >= 2 ? 'two' : 'one'}}" data-index="{{index}}">
+                <view class="image-item" wx:for="{{item.image}}" wx:key="items" wx:for-item="items">
+                  <image src="{{items}}" data-img="{{[items, item.image]}}" mode="aspectFill" bindtap="previewImg"></image>
+                </view>
+              </view>
+            </block>
+
+            <block wx:if="{{item.address}}">
+              <view class="address">{{item.address}}</view>
+            </block>
+          </view>
+
+          <view class="mood-foot">
+            <text class="like" bindtap="like" data-index="{{index}}" >点赞{{item.like}}</text>
+            <text class="comment" bindtap="comment" data-index="{{index}}">评论{{item.comment.length}}</text>
+            <text class="view" bindtap="view">浏览{{item.view}}</text>
+          </view>
+
+          <block wx:if="{{item.comment.length > 0}}">
+            <view class="comment-list">
+              <view class="comment-item" wx:for="{{item.comment}}" wx:for-item="items" wx:key="items">
+                <text class="comment-name">{{items.userName}}</text>
+                <text class="comment-content">：{{items.content}}</text>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      没心情
+    </block>
+  </view>
+</view>

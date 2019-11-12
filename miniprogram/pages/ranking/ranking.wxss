@@ -1,7 +1,13 @@
-.container{
-
+page, .container{
+  height: 100%;
 }
 .ranking-tab{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 9999;
   display: flex;
   justify-content: content;
   align-items: center;
@@ -16,7 +22,9 @@
 
 
 .ranking-list{
-  padding: 0 20rpx;
+  height: 100%;
+  padding: 90rpx 20rpx 0;
+  box-sizing: border-box;
 }
 .ranking-list .item{
   display: flex;

@@ -4,6 +4,9 @@ const app = getApp(); // 获取全局数据
 Page({
 
   bindGetUserInfo: function(e){
+    wx.showLoading({
+      title: '签到中',
+    })
 
     if (e.detail.userInfo) { // 授权成功，向数据库添加用户数据
       // 查找当前用户是否存在
@@ -15,7 +18,23 @@ Page({
 
           app.onLaunch()
           
-          wx.navigateBack()
+          wx.hideLoading()
+          wx.showToast({
+            icon: "none",
+            title: '签到成功',
+            duration: 2000
+          })
+          setTimeout(function () {
+            // 发表成功回到心情页面，并更新数据
+            wx.switchTab({
+              url: '/pages/index/index',
+              success: function (e) {
+                var page = getCurrentPages().pop();
+                if (page == undefined || page == null) return;
+                page.onLoad();
+              }
+            })
+          }, 2000)
 
         } else {// 用户不存在，添加
           
@@ -24,12 +43,29 @@ Page({
               nickName: e.detail.userInfo.nickName,
               avatarUrl: e.detail.userInfo.avatarUrl, 
               gender: e.detail.userInfo.gender,
-              addTime: app.globalData.currentDate,
+              addTime: app.dateFormat('YYYY-MM-DD HH:mm:ss'),
               lastTime: 0,
-              count: 0 // 默认点赞天数
+              count: 0, // 默认点赞天数
+              timeList: []
             }
           }).then(res => {
-            wx.navigateBack()
+            wx.hideLoading()
+            wx.showToast({
+              icon: "none",
+              title: '签到成功',
+              duration: 2000
+            })
+            setTimeout(function () {
+              // 发表成功回到心情页面，并更新数据
+              wx.switchTab({
+                url: '/pages/index/index',
+                success: function (e) {
+                  var page = getCurrentPages().pop();
+                  if (page == undefined || page == null) return;
+                  page.onLoad();
+                }
+              })
+            }, 2000)
             console.log('添加用户成功')
           }).catch(err => {
             console.log('添加用户失败')
