@@ -41,10 +41,8 @@ Page({
           day = this.formatDay(date.getDate()),
           today = `${year}-${month}-${day}`;
     let calendar = this.generateThreeMonths(year, month);
-    // arr.filter(item => {
-    //   console.log(item)
-    // })
-    
+ 
+ 
 
     
     let arr = [];
@@ -62,7 +60,6 @@ Page({
       })
     })
     console.log(dateArr); 
-    console.log(app.globalData.openId)
     dateArr.forEach((item, index) => {
       db.collection('userInfo')
         .where({
@@ -70,7 +67,7 @@ Page({
         })
         .get()
         .then(res => {
-          console.log(res)
+          // console.log(res)
         })
     })
 
