@@ -1,9 +1,10 @@
 <view class="container">
-  <image src="/images/login.jpg" mode="scaleToFill"></image>
+  <image class="bg" src="/images/login.jpg" mode="scaleToFill"></image>
   <button class="button" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">开始</button> 
-  <text class="title">
+  <!-- <text class="title">
     如果仅把年少的时光当作是年轻的，
     那是一件多么可悲的事情。
-  </text>
+  </text> -->
+  <image class="text" src="/images/text.png" mode="widthFix"></image>
   <text class="back" decode="true"></text>
 </view>

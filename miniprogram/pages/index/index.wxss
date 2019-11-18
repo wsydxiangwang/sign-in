@@ -6,14 +6,26 @@ page, .container{
 
 .info{
   height: 50%;
-  /* display: flex;
-  justify-content: space-evenly;
-  flex-direction: column; */
   background: #22b5ff;
   color: #fff;
-  /* clip-path: inset(0 -10% 0  -10% round 0 0 100% 100%); */
   margin-bottom: 10%;
   position: relative;
+}
+.info .info-box{
+  position: absolute;
+  right: 0;
+  top: 20rpx;
+  text-align: right;
+  font-size: 26rpx;
+}
+.info .info-box .item{
+  background: rgb(25, 171, 255);
+  border-radius: 50px 0 0 50px;
+  margin-bottom: 6rpx;
+  padding: 0 20rpx 0 30rpx;
+  font-size: 24rpx;
+  height: 50rpx;
+  line-height: 50rpx;
 }
 .info .info-bg{
   width: 100%;

@@ -44,7 +44,16 @@ page, .container{
   border-top: 4rpx solid #fff;
   transform: rotate(-45deg);
 }
-image{
+.bg{
   height: 100%;
   width: 100%
+}
+
+.text{
+  position: absolute;
+  left: 60rpx;
+  top: 40%;
+  transform: translateY(-50%);
+  opacity: 0.9;
+  width: 100rpx;
 }

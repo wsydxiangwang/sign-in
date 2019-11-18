@@ -2,15 +2,17 @@
 <view class="container">
 
   <view class="info">
-    <view>
-      <text>坚持天数</text>
-      <text>{{count}}</text>
+    <view class="info-box">
+      <view class="item">
+        <text>{{count}} </text>
+        <text>坚持</text>
+      </view>
+      <view class="item">
+        <text>{{count}} </text>
+        <text>连续</text>
+      </view>
+      <view class="item" bindtap="ranking">排行</view>
     </view>
-    <view>
-      <text>最高连续</text>
-      <text>{{count}}</text>
-    </view>
-    <view bindtap="ranking">排行榜</view>
     <view class="word">一年之计在于春，一日之计在于晨。</view>
     <image class="info-bg" src="../../images/bg.png" mode="widthFix"></image>
   </view>
