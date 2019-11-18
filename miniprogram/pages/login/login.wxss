@@ -33,6 +33,17 @@ page, .container{
   writing-mode: tb-rl;
   opacity: 0.9;
 }
+.back{
+  position: absolute;
+  top: 73rpx;
+  left: 40rpx;
+  height: 26rpx;
+  width:26rpx;
+  font-size: 30rpx;
+  border-left: 4rpx solid #fff;
+  border-top: 4rpx solid #fff;
+  transform: rotate(-45deg);
+}
 image{
   height: 100%;
   width: 100%

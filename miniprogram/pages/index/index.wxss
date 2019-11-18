@@ -1,6 +1,7 @@
 page, .container{
   height: 100%;
   text-align: center;
+  overflow: hidden;
 }
 
 .info{
