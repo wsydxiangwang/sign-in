@@ -1,6 +1,6 @@
 {
   "usingComponents": {},
-  "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "早起打卡",
-  "navigationBarBackgroundColor": "#9ae4ff"
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "早晨签到",
+  "navigationBarBackgroundColor": "#22b5ff"
 }

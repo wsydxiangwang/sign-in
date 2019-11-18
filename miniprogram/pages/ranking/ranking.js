@@ -11,7 +11,8 @@ Page({
   data: {
     currentTab: 0,
     todayList: [], // 今日排行
-    totalList: []  // 总排行榜
+    totalList: [], // 总排行榜
+    swiperHeight: 0
   },
   // 点赞
   like: function(e){
@@ -76,7 +77,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let height = wx.getSystemInfoSync().windowHeight - 41;
+    this.setData({
+      swiperHeight: height
+    })
     // 获取当天排行榜
     db.collection('today').doc(app.dateFormat('YYYY-MM-DD'))
     .get()
@@ -84,6 +88,7 @@ Page({
       this.setData({
         todayList: res.data.data
       })
+      console.log(this.data.todayList)
     })
     .catch(err => {
       console.log('今天还没有签到哦')
@@ -101,6 +106,8 @@ Page({
     .catch(err => {
       console.log(err)
     })
+
+
   },
 
   /**

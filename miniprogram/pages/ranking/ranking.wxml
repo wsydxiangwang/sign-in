@@ -1,39 +1,66 @@
 <view class="container">
+
   <view class="ranking-tab swiper-tab">
     <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">今日排行</view>
-    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">总排行榜</view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">早起排行</view>
   </view>
 
-  <swiper class="ranking-list" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
+  <swiper class="ranking-list" current="{{currentTab}}" duration="300"  bindchange="swiperTab" style="height:{{swiperHeight}}px">
 
       <!-- 今日排行 -->
-      <swiper-item>
+      <swiper-item class="ranking-item">
+
         <block wx:if="{{todayList.length}}">
-          <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key>
-            <view class="rank">{{index + 1}}</view>
-            <view class="info">
-              <view class="image">
-                <image src="{{item.avatarUrl}}"></image>
+
+          <view class="header">
+            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index < 3}}">
+              <view class="info">
+                <view class="image">
+                  <image src="{{item.avatarUrl}}"></image>
+                </view>
+                <view class="title">
+                  <text class="tit">{{item.nickName}}</text>
+                  <text class="des">{{item.currentTime}}</text>
+                </view>
               </view>
-              <view class="title">
-                <text class="tit">{{item.nickName}}</text>
-                <text class="des">{{item.currentTime}}</text>
+              <view class="like" bindtap="like" data-index="{{index}}">
+                点赞<text>{{item.like}}</text>
               </view>
-            </view>
-            <view class="like" bindtap="like" data-index="{{index}}">
-              点赞<text>{{item.like}}</text>
             </view>
           </view>
+
+          <view class="other">
+            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:key wx:if="{{index > 2}}">
+              <view class="rank">{{index + 1}}</view>
+              <view class="info">
+                <view class="image">
+                  <image src="{{item.avatarUrl}}"></image>
+                </view>
+                <view class="title">
+                  <text class="tit">{{item.nickName}}</text>
+                  <text class="des">{{item.currentTime}}</text>
+                </view>
+              </view>
+              <view class="like" bindtap="like" data-index="{{index}}">
+                点赞<text>{{item.like}}</text>
+              </view>
+            </view>
+          </view>
+
         </block>
+
+          
+
         <block wx:else>    
           <view>
             还没人签到
           </view>
         </block>
+        
       </swiper-item>
 
       <!-- 总排行榜 -->
-      <swiper-item>
+      <swiper-item class="ranking-item">
         <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{item.count != 0}}">
           <view class="rank">{{index + 1}}</view>
           <view class="info">

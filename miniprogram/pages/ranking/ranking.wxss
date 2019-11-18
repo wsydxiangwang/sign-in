@@ -1,12 +1,9 @@
 page, .container{
   height: 100%;
+  background: #22b5ff;
 }
 .ranking-tab{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
+  background: #22b5ff;
   z-index: 9999;
   display: flex;
   justify-content: content;
@@ -20,73 +17,94 @@ page, .container{
   flex: 1;
 }
 
-
-.ranking-list{
-  height: 100%;
-  padding: 90rpx 20rpx 0;
+.ranking-list .ranking-item{
+  overflow-y: auto;
   box-sizing: border-box;
+  background: #22b5ff;
 }
-.ranking-list .item{
+
+.ranking-list .ranking-item .header{
+  display: flex;
+  text-align: center;
+  color: #fff;
+}
+.header .item .image{
+  height: 85rpx;
+  width: 85rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.header .item .image image{
+  height: 100%;
+  width: 100%;
+}
+
+.ranking-list .ranking-item .other{
+  background: #fff;
+  border-radius: 50rpx 50rpx 0 0;
+  margin-top: 40rpx;
+}
+
+.other .item{
   display: flex;
   align-items: center;
   color: #999;
   border-bottom: 1px solid #f5f5f5;
   padding: 26rpx 0;
 }
-.ranking-list .item .rank{
+.other .item .rank{
   width: 80rpx;
   font-size: 34rpx;
   text-align: center;
 }
 
-.ranking-list .item .info{
+.other .item .info{
   flex: 1;
   width: 0;
   height: 85rpx;
 }
-.ranking-list .item .info .image{
+.other .item .info .image{
   height: 85rpx;
   width: 85rpx;
-  border: 1px solid #666;
   border-radius: 50%;
   margin-right: 20rpx;
   overflow: hidden;
   float: left;
 }
-.ranking-list .item .info .image image{
+.other .item .info .image image{
   height: 86rpx;
   width: 86rpx;
 }
 
-.ranking-list .item .info .title{
+.other .item .info .title{
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   
 }
-.ranking-list .item .info .title .tit{
+.other .item .info .title .tit{
   font-size: 30rpx;
   color: #333;
 }
-.ranking-list .item .info .title .des{
+.other .item .info .title .des{
   font-size: 22rpx;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.ranking-list .item .like{
+.other .item .like{
   width: 80rpx;
   font-size: 22rpx;
   text-align: right;
   color: #a6a6a6;
 }
-.ranking-list .item .count{
+.other .item .count{
   width: 80rpx;
   font-size: 24rpx;
   text-align: right;
 }
-.ranking-list .item .count text:first-child{
+.other .item .count text:first-child{
   font-size: 34rpx;
 }

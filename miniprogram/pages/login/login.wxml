@@ -1,1 +1,8 @@
-<button class="login" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录</button> 
+<view class="container">
+  <image src="/images/login.jpg" mode="scaleToFill"></image>
+  <button class="button" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">开始</button> 
+  <text class="title">
+    如果仅把年少的时光当作是年轻的，
+    那是一件多么可悲的事情。
+  </text>
+</view>

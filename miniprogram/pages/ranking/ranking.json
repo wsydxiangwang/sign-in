@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "排行榜",
+  "navigationBarBackgroundColor": "#22b5ff"
 }

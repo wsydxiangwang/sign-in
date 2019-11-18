@@ -1,8 +1,39 @@
-.login{
-  height: 200rpx;
-  width: 200rpx;
-  border: 1px solid #ccc;
-  color: #333;
+page, .container{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.button{
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  height: 160rpx;
+  width: 160rpx;
+  line-height: 160rpx;
+  border-radius: 50%;
   font-size: 30rpx;
   text-align: center;
+  background: #fff;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px 20px #fff;
+  color: rgb(36, 156, 255);
+  font-weight: 600;
+}
+.button::after{
+  display: none;
+}
+.title{
+  position: absolute;
+  left: 40rpx;
+  top: 40%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 28rpx;
+  letter-spacing: 6rpx;
+  writing-mode: tb-rl;
+  opacity: 0.9;
+}
+image{
+  height: 100%;
+  width: 100%
 }

@@ -1,17 +1,32 @@
 <!--index.wxml-->
 <view class="container">
+
   <view class="info">
     <view>
       <text>坚持天数</text>
       <text>{{count}}</text>
     </view>
-  </view>
-  <view class="word">一年之计在于春，一日之计在于晨。</view>
-  <button class="singnin-btn actived" bindtap="singnin">签到</button>
-  <view class="time">
-    <text>签到时间：</text>
-    <text>05:00~08:00</text>
+    <view>
+      <text>最高连续</text>
+      <text>{{count}}</text>
+    </view>
+    <view bindtap="ranking">排行榜</view>
+    <view class="word">一年之计在于春，一日之计在于晨。</view>
+    <image class="info-bg" src="../../images/bg.png" mode="widthFix"></image>
   </view>
 
-  <view bindtap="ranking">排行榜</view>
+  <view class="under">
+  
+
+    <button class="singnin-btn actived" bindtap="singnin">
+      <!-- <text class="time">06:20</text> -->
+      <text>签到</text>
+    </button>
+    <!-- <view class="time">
+      <text>签到时间：</text>
+      <text>05:00~08:00</text>
+    </view> -->
+    
+  </view>
+
 </view>
