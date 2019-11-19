@@ -30,19 +30,26 @@
           </view>
 
           <view class="other" style="height:{{otherHeight}}px">
-            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:key wx:if="{{index > 2}}">
-              <view class="rank">{{index + 1}}</view>
-              <view class="info">
-                <view class="image">
-                  <image src="{{item.avatarUrl}}"></image>
+            <view class="other-box">
+              <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:key wx:if="{{index > 2}}">
+
+                <view class="rank">{{index + 1}}</view>
+
+                <view class="info">
+                  <view class="image">
+                    <image src="{{item.avatarUrl}}"></image>
+                  </view>
+                  <view class="title">
+                    <text class="tit">{{item.nickName}}</text>
+                  </view>
                 </view>
-                <view class="title">
-                  <text class="tit">{{item.nickName}}</text>
-                  <text class="des">{{item.currentTime}}</text>
+
+                <view class="right">
+                  <view class="time">{{item.currentTime}}</view>
+                  <view class="like" bindtap="like" data-index="{{index}}">
+                    <text>{{item.like}}</text>
+                  </view>
                 </view>
-              </view>
-              <view class="like" bindtap="like" data-index="{{index}}">
-                点赞<text>{{item.like}}</text>
               </view>
             </view>
           </view>

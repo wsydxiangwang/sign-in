@@ -4,17 +4,27 @@ page, .container{
 }
 .ranking-tab{
   background: #22b5ff;
-  z-index: 9999;
   display: flex;
-  justify-content: content;
-  align-items: center;
-  text-align: center;
-  height: 40px;
-  line-height: 40px;
-  border-bottom: 1px solid #ddd;
+  justify-content: space-evenly;
+  height: 60rpx;
+  line-height: 60rpx;
 }
-.ranking-tab view{
-  flex: 1;
+.ranking-tab .swiper-tab-item{
+  color: #fff;
+  font-size: 26rpx;
+  position: relative;
+}
+.ranking-tab .swiper-tab-item.active::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: inline-block;
+  height: 4rpx;
+  width: 50rpx;
+  border-radius: 20px;
+  transform: translateX(-50%);
+  background: #fff;
 }
 
 .ranking-list .ranking-item{
@@ -26,11 +36,12 @@ page, .container{
 .ranking-list .ranking-item .header{
   display: flex;
   text-align: center;
+  padding: 40rpx;
   color: #fff;
 }
 .header .item .image{
-  height: 85rpx;
-  width: 85rpx;
+  height: 80rpx;
+  width: 80rpx;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -42,6 +53,10 @@ page, .container{
 .ranking-list .ranking-item .other{
   background: #fff;
   border-radius: 50rpx 50rpx 0 0;
+  padding-top: 30rpx;
+}
+.ranking-list .ranking-item .other-box{
+  height: 100%;
   overflow-y: auto;
 }
 
@@ -50,30 +65,31 @@ page, .container{
   align-items: center;
   color: #999;
   border-bottom: 1px solid #f5f5f5;
-  padding: 26rpx 0;
+  padding: 20rpx 0;
 }
 .other .item .rank{
-  width: 80rpx;
+  width: 90rpx;
   font-size: 34rpx;
   text-align: center;
+  font-style: italic;
 }
 
 .other .item .info{
   flex: 1;
   width: 0;
-  height: 85rpx;
+  height: 75rpx;
 }
 .other .item .info .image{
-  height: 85rpx;
-  width: 85rpx;
+  height: 75rpx;
+  width: 75rpx;
   border-radius: 50%;
   margin-right: 20rpx;
   overflow: hidden;
   float: left;
 }
 .other .item .info .image image{
-  height: 86rpx;
-  width: 86rpx;
+  height: 76rpx;
+  width: 76rpx;
 }
 
 .other .item .info .title{
@@ -84,22 +100,31 @@ page, .container{
   
 }
 .other .item .info .title .tit{
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #333;
 }
-.other .item .info .title .des{
-  font-size: 22rpx;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+
+.other .item .right{
+  display: flex;
+}
+.other .item .right .time{
+  font-size: 24rpx;
+  color: #fff;
+  background: rgb(56, 166, 240);
+  padding: 0 20rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  border-radius: 30px;
+}
+.other .item .right .like{
+  width: 50rpx;
+  font-size: 26rpx;
+  text-align: center;
 }
 
-.other .item .like{
-  width: 80rpx;
-  font-size: 22rpx;
-  text-align: right;
-  color: #a6a6a6;
-}
+
+
+
 .other .item .count{
   width: 80rpx;
   font-size: 24rpx;
