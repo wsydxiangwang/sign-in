@@ -12,7 +12,8 @@ Page({
     currentTab: 0,
     todayList: [], // 今日排行
     totalList: [], // 总排行榜
-    swiperHeight: 0
+    swiperHeight: 0,
+    otherHeight: 0
   },
   // 点赞
   like: function(e){
@@ -78,8 +79,10 @@ Page({
    */
   onLoad: function (options) {
     let height = wx.getSystemInfoSync().windowHeight - 41;
+    let otherHeight = wx.getSystemInfoSync().windowHeight - 41 - 87;
     this.setData({
-      swiperHeight: height
+      swiperHeight: height,
+      otherHeight: otherHeight
     })
     // 获取当天排行榜
     db.collection('today').doc(app.dateFormat('YYYY-MM-DD'))

@@ -9,8 +9,8 @@ page, .container{
   justify-content: content;
   align-items: center;
   text-align: center;
-  height: 80rpx;
-  line-height: 80rpx;
+  height: 40px;
+  line-height: 40px;
   border-bottom: 1px solid #ddd;
 }
 .ranking-tab view{
@@ -18,7 +18,7 @@ page, .container{
 }
 
 .ranking-list .ranking-item{
-  overflow-y: auto;
+  overflow: hidden;
   box-sizing: border-box;
   background: #22b5ff;
 }
@@ -42,7 +42,7 @@ page, .container{
 .ranking-list .ranking-item .other{
   background: #fff;
   border-radius: 50rpx 50rpx 0 0;
-  margin-top: 40rpx;
+  overflow-y: auto;
 }
 
 .other .item{

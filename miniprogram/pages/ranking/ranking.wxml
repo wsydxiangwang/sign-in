@@ -29,7 +29,7 @@
             </view>
           </view>
 
-          <view class="other">
+          <view class="other" style="height:{{otherHeight}}px">
             <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:key wx:if="{{index > 2}}">
               <view class="rank">{{index + 1}}</view>
               <view class="info">
