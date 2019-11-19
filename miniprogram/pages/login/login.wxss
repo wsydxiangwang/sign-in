@@ -7,39 +7,28 @@ page, .container{
   position: absolute;
   top: 30%;
   left: 50%;
-  height: 160rpx;
-  width: 160rpx;
-  line-height: 160rpx;
+  height: 180rpx;
+  width: 180rpx;
+  line-height: 180rpx;
   border-radius: 50%;
-  font-size: 30rpx;
+  font-size: 34rpx;
   text-align: center;
   background: #fff;
   transform: translateX(-50%);
-  box-shadow: 0 0 20px 20px #fff;
+  box-shadow: 0 0 22px 20px #fff;
   color: rgb(36, 156, 255);
   font-weight: 600;
 }
 .button::after{
   display: none;
 }
-.title{
-  position: absolute;
-  left: 40rpx;
-  top: 40%;
-  transform: translateY(-50%);
-  color: #fff;
-  font-size: 28rpx;
-  letter-spacing: 6rpx;
-  writing-mode: tb-rl;
-  opacity: 0.9;
-}
+
 .back{
   position: absolute;
-  top: 73rpx;
+  top: 50px;
   left: 40rpx;
-  height: 26rpx;
-  width:26rpx;
-  font-size: 30rpx;
+  height: 22rpx;
+  width: 22rpx;
   border-left: 4rpx solid #fff;
   border-top: 4rpx solid #fff;
   transform: rotate(-45deg);

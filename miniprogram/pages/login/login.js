@@ -2,7 +2,9 @@ const db = wx.cloud.database(); // 初始化数据库
 const app = getApp(); // 获取全局数据
 
 Page({
-
+  data: {
+    height: 0
+  },
   bindGetUserInfo: function(e){
     wx.showLoading({
       title: '签到中',
@@ -89,6 +91,9 @@ Page({
       })
     }
   },
+  back(e){
+    wx.navigateBack();
+  },
   /**
    * 页面的初始数据
    */
@@ -100,7 +105,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let top = wx.getMenuButtonBoundingClientRect().top;
+    let _this = this;
+    let titleBarHeight = 48;
+    wx.getSystemInfo({
+      success(res){
+        if (res.platform.toLowerCase() == 'android'){
+          titleBarHeight += 4;
+        }
+        let height = res.statusBarHeight + (titleBarHeight - 32)/2 + 6;
+        _this.setData({
+          height: height
+        })
+      }
+    })
   },
 
   /**

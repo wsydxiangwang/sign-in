@@ -4,12 +4,12 @@
   <view class="info">
     <view class="info-box">
       <view class="item">
-        <text>{{count}} </text>
-        <text>坚持</text>
+        <text>连续</text>
+        <text>{{count}}</text>
       </view>
       <view class="item">
-        <text>{{count}} </text>
-        <text>连续</text>
+        <text>坚持</text>
+        <text>{{count}}</text>
       </view>
       <view class="item" bindtap="ranking">排行</view>
     </view>

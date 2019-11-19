@@ -6,5 +6,5 @@
     那是一件多么可悲的事情。
   </text> -->
   <image class="text" src="/images/text.png" mode="widthFix"></image>
-  <text class="back" decode="true"></text>
+  <text class="back" bindtap="back" style="top:{{height}}px"></text>
 </view>
