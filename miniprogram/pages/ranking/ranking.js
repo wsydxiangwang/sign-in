@@ -78,12 +78,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let height = wx.getSystemInfoSync().windowHeight - 41;
-    let otherHeight = wx.getSystemInfoSync().windowHeight - 41 - 87;
+    let height = wx.getSystemInfoSync().windowHeight - 30;
+    let otherHeight = (height * 2) - 60 - 470;
+
+    console.log(height)
+    console.log(otherHeight, otherHeight/2)
+
     this.setData({
       swiperHeight: height,
       otherHeight: otherHeight
     })
+    
+
+
+
     // 获取当天排行榜
     db.collection('today').doc(app.dateFormat('YYYY-MM-DD'))
     .get()
@@ -118,6 +126,10 @@ Page({
    */
   onReady: function () {
 
+    var query = wx.createSelectorQuery().in(this);
+    query.select('.header').boundingClientRect(function (e) {
+      console.log(e)
+    }).exec()
   },
 
   /**

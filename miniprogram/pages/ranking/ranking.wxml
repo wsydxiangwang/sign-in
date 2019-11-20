@@ -32,9 +32,9 @@
             </view>
           </view>
 
-          <image class="rankingBg" src="../../images/rankingBg.png" mode="widthFix"></image>
+          <image class="rankingBg" src="../../images/rankingBg.png"></image>
 
-          <view class="other" style="height:{{otherHeight}}px">
+          <view class="other" style="height:{{otherHeight}}rpx">
             <view class="other-box">
               <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:key wx:if="{{index > 2}}">
 

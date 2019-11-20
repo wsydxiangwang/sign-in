@@ -6,8 +6,8 @@ page, .container{
   background: #22b5ff;
   display: flex;
   justify-content: space-evenly;
-  height: 60rpx;
-  line-height: 60rpx;
+  height: 30px;
+  line-height: 30px;
 }
 .ranking-tab .swiper-tab-item{
   color: #fff;
@@ -62,11 +62,19 @@ page, .container{
   margin-top: 90rpx;
 }
 .header .item .time{
-  font-size: 28rpx;
+  font-size: 30rpx;
+  margin-bottom: 10rpx;
 }
 .header .item .like{
   position: relative;
 }
+.header .item .like.done .iconfont{
+  color: red;
+}
+.header .item .like.done .num{
+  color: #fff;
+}
+
 .header .item .like .iconfont{
   color: #fff;
 }
@@ -91,7 +99,7 @@ page, .container{
 
 .ranking-list .ranking-item .other{
   background: #fff;
-  padding-top: 30rpx;
+  padding: 30rpx 0;
 }
 .ranking-list .ranking-item .other-box{
   height: 100%;
@@ -154,13 +162,20 @@ page, .container{
 }
 .other .item .right .time{
   font-size: 28rpx;
-  color: rgb(56, 166, 240);
-  padding: 0 20rpx;
+  margin-right: 20rpx;
+  color: transparent;
+  overflow: hidden;
+  background: linear-gradient(to right, #22b5ff, red);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
 }
 
 .item .like{
   text-align: center;
   position: relative;
+}
+.item .like.done .iconfont{
+  color: red;
 }
 .item .like .iconfont{
   font-size: 50rpx;
@@ -191,5 +206,6 @@ page, .container{
 .rankingBg{
   display: block;
   width: 100%;
+  height: 270rpx;
   margin-top: 200rpx;
 }
