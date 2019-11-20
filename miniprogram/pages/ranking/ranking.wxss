@@ -34,29 +34,68 @@ page, .container{
 }
 
 .ranking-list .ranking-item .header{
-  display: flex;
-  text-align: center;
-  padding: 40rpx;
   color: #fff;
+  position: absolute;
+  top: 120rpx;
+  width: 100%;
+  padding: 0 5%;
+}
+.header .item{
+  width: 30%;
+  display: inline-block;
+  text-align: center;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.header .item .title{
+  font-size: 26rpx;
+  margin-top: 22rpx;
+}
+.header .item .title .tit{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+}
+.header .item .bottom{
+  margin-top: 90rpx;
+}
+.header .item .time{
+  font-size: 28rpx;
+}
+.header .item .like{
+  position: relative;
+}
+.header .item .like .iconfont{
+  color: #fff;
+}
+.header .item .like .num{
+  color: #22b5ff;
 }
 .header .item .image{
   height: 80rpx;
   width: 80rpx;
   border-radius: 50%;
   overflow: hidden;
+  margin: auto;
 }
 .header .item .image image{
   height: 100%;
   width: 100%;
 }
+.header .item:nth-of-type(2){
+  transform: translateY(-70rpx)
+}
+
 
 .ranking-list .ranking-item .other{
   background: #fff;
-  border-radius: 50rpx 50rpx 0 0;
   padding-top: 30rpx;
 }
 .ranking-list .ranking-item .other-box{
   height: 100%;
+  padding: 0 30rpx;
   overflow-y: auto;
 }
 
@@ -64,14 +103,15 @@ page, .container{
   display: flex;
   align-items: center;
   color: #999;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #f6f7f8;
   padding: 20rpx 0;
 }
 .other .item .rank{
-  width: 90rpx;
+  width: 50rpx;
   font-size: 34rpx;
   text-align: center;
   font-style: italic;
+  margin-right: 25rpx;
 }
 
 .other .item .info{
@@ -102,24 +142,38 @@ page, .container{
 .other .item .info .title .tit{
   font-size: 28rpx;
   color: #333;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .other .item .right{
   display: flex;
+  align-items: center;
 }
 .other .item .right .time{
-  font-size: 24rpx;
-  color: #fff;
-  background: rgb(56, 166, 240);
+  font-size: 28rpx;
+  color: rgb(56, 166, 240);
   padding: 0 20rpx;
-  height: 44rpx;
-  line-height: 44rpx;
-  border-radius: 30px;
 }
-.other .item .right .like{
-  width: 50rpx;
-  font-size: 26rpx;
+
+.item .like{
   text-align: center;
+  position: relative;
+}
+.item .like .iconfont{
+  font-size: 50rpx;
+  color: #ccc;  
+}
+.item .like .num{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-60%);
+  font-size: 20rpx;
+  color: #fff;
 }
 
 
@@ -132,4 +186,10 @@ page, .container{
 }
 .other .item .count text:first-child{
   font-size: 34rpx;
+}
+
+.rankingBg{
+  display: block;
+  width: 100%;
+  margin-top: 200rpx;
 }

@@ -9,7 +9,7 @@
 
       <!-- 今日排行 -->
       <swiper-item class="ranking-item">
-
+        
         <block wx:if="{{todayList.length}}">
 
           <view class="header">
@@ -20,14 +20,19 @@
                 </view>
                 <view class="title">
                   <text class="tit">{{item.nickName}}</text>
-                  <text class="des">{{item.currentTime}}</text>
                 </view>
               </view>
-              <view class="like" bindtap="like" data-index="{{index}}">
-                点赞<text>{{item.like}}</text>
+              <view class="bottom">
+                <view class="time">{{item.currentTime}}</view>
+                <view class="like" bindtap="like" data-index="{{index}}">
+                  <text class="iconfont iconheart"></text>
+                  <text class="num">{{item.like}}</text>
+                </view>
               </view>
             </view>
           </view>
+
+          <image class="rankingBg" src="../../images/rankingBg.png" mode="widthFix"></image>
 
           <view class="other" style="height:{{otherHeight}}px">
             <view class="other-box">
@@ -47,7 +52,8 @@
                 <view class="right">
                   <view class="time">{{item.currentTime}}</view>
                   <view class="like" bindtap="like" data-index="{{index}}">
-                    <text>{{item.like}}</text>
+                    <text class="iconfont iconheart"></text>
+                    <text class="num">{{item.like}}</text>
                   </view>
                 </view>
               </view>
