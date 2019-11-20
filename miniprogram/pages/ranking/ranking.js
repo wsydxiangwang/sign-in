@@ -79,14 +79,9 @@ Page({
    */
   onLoad: function (options) {
     let height = wx.getSystemInfoSync().windowHeight - 30;
-    let otherHeight = (height * 2) - 60 - 470;
-
-    console.log(height)
-    console.log(otherHeight, otherHeight/2)
 
     this.setData({
-      swiperHeight: height,
-      otherHeight: otherHeight
+      swiperHeight: height
     })
     
 
@@ -118,6 +113,17 @@ Page({
       console.log(err)
     })
 
+    let _this = this;
+    setTimeout(() => {
+      var query = wx.createSelectorQuery().in(this);
+      query.select('.rankingBg').boundingClientRect(function (e) {
+        console.log(height, otherHeight)
+        let otherHeight = height - e.height - 10;
+        _this.setData({
+          otherHeight: otherHeight
+        })
+      }).exec()
+    }, 500)
 
   },
 
@@ -126,10 +132,7 @@ Page({
    */
   onReady: function () {
 
-    var query = wx.createSelectorQuery().in(this);
-    query.select('.header').boundingClientRect(function (e) {
-      console.log(e)
-    }).exec()
+    
   },
 
   /**

@@ -99,7 +99,7 @@ page, .container{
 
 .ranking-list .ranking-item .other{
   background: #fff;
-  padding: 30rpx 0;
+  padding: 10px 0;
 }
 .ranking-list .ranking-item .other-box{
   height: 100%;
@@ -207,5 +207,5 @@ page, .container{
   display: block;
   width: 100%;
   height: 270rpx;
-  margin-top: 200rpx;
+  padding-top: 200rpx;
 }
