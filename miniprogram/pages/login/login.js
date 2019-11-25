@@ -7,7 +7,7 @@ Page({
   },
   bindGetUserInfo: function(e){
     wx.showLoading({
-      title: '签到中',
+      title: '登录中...',
     })
 
     if (e.detail.userInfo) { // 授权成功，向数据库添加用户数据
@@ -23,11 +23,11 @@ Page({
           wx.hideLoading()
           wx.showToast({
             icon: "none",
-            title: '签到成功',
+            title: '登录成功',
             duration: 2000
           })
           setTimeout(function () {
-            // 发表成功回到心情页面，并更新数据
+            // 登录成功返回，并更新数据
             wx.switchTab({
               url: '/pages/index/index',
               success: function (e) {
@@ -46,7 +46,10 @@ Page({
               avatarUrl: e.detail.userInfo.avatarUrl, 
               gender: e.detail.userInfo.gender,
               addTime: app.dateFormat('YYYY-MM-DD HH:mm:ss'),
-              lastTime: 0,
+              lastTime: '',
+              lastHours: '',
+              runningDay: 0,
+              longRunningDay: 0,
               count: 0, // 默认点赞天数
               timeList: []
             }
@@ -54,11 +57,11 @@ Page({
             wx.hideLoading()
             wx.showToast({
               icon: "none",
-              title: '签到成功',
+              title: '登录成功',
               duration: 2000
             })
             setTimeout(function () {
-              // 发表成功回到心情页面，并更新数据
+              // 登录成功返回，并更新数据
               wx.switchTab({
                 url: '/pages/index/index',
                 success: function (e) {

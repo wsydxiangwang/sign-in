@@ -75,10 +75,11 @@ Page({
         longitude: longitude
       },
       success(res){
+        console.log(res)
         let province = res.result.ad_info.province;
         let city = res.result.ad_info.city;
         _this.setData({
-          address: province + city
+          address: province + ' ' + city
         })
       },
       fail(res){
@@ -166,7 +167,7 @@ Page({
               success: function (e) {
                 var page = getCurrentPages().pop();
                 if (page == undefined || page == null) return;
-                page.onPullDownRefresh();
+                page.onLoad();
               }
             })
           }, 2000)
@@ -205,7 +206,7 @@ Page({
             success: function(e) {
               var page = getCurrentPages().pop();
               if (page == undefined || page == null) return;
-              page.onPullDownRefresh();
+              page.onLoad();
             }
           })
         }, 2000)

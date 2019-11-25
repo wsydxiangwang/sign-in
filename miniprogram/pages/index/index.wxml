@@ -4,14 +4,21 @@
   <view class="info">
     <view class="info-box">
       <view class="item">
-        <text>连续</text>
-        <text>{{count}}</text>
+        <text>最高</text>
+        <text>{{longRunningDay}} 天</text>
       </view>
       <view class="item">
-        <text>坚持</text>
-        <text>{{count}}</text>
+        <text>连续</text>
+        <text>{{runningDay}} 天</text>
       </view>
-      <view class="item" bindtap="ranking">排行</view>
+
+      <view class="item">
+        <text>坚持</text>
+        <text>{{count}} 天</text>
+      </view>
+      <view class="item" bindtap="ranking">
+        排行
+      </view>
     </view>
     <view class="word">一年之计在于春，一日之计在于晨。</view>
     <image class="info-bg" src="../../images/bg.png" mode="widthFix"></image>
@@ -21,8 +28,8 @@
   
 
     <button class="singnin-btn actived" bindtap="singnin">
-      <!-- <text class="time">06:20</text> -->
-      <text>签到</text>
+      <text wx:if="{{hours}}">{{hours}}</text>
+      <text wx:else>签到</text>
     </button>
     <!-- <view class="time">
       <text>签到时间：</text>

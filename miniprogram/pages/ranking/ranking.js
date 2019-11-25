@@ -23,6 +23,7 @@ Page({
 
     let num = this.data.todayList[index];
     let arr = 'todayList[' + index + '].like';
+    let liked = 'todayList[' + index + '].liked';
 
     wx.getStorage({
       key: `rankLike-${openid}`,
@@ -36,13 +37,14 @@ Page({
       },
       fail(err) {
         // 未点赞
-        wx.setStorageSync(`rankLike-${openid}`, 'true'); // 设置缓存
+        wx.setStorageSync(`rankLike-${openid}`, index); // 设置缓存
 
         _this.setData({  // 更新页面
-          [arr]: num.like + 1
+          [arr]: num.like + 1,
+          [liked]: true
         })
+        console.log(num)
 
-        // 调用云函数进行点赞更新
         wx.cloud.callFunction({
           name: 'signin',
           data: {
@@ -74,19 +76,37 @@ Page({
       })
     }
   },
+  // 获取已点赞
+  liked(e) {
+    let _this = this;
+    wx.getStorageInfo({
+      success(res) {
+        let keyArr = res.keys;
+        keyArr.forEach((item) => {
+          wx.getStorage({
+            key: item,
+            success(res) {
+              let index = res.data;
+              let num = _this.data.todayList[index];
+              console.log(num)
+              let liked = 'todayList[' + index + '].liked';
+              _this.setData({  // 更新页面
+                [liked]: true
+              })
+              console.log(num)
+            }
+          })
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let height = wx.getSystemInfoSync().windowHeight - 30;
-
-    this.setData({
-      swiperHeight: height
+    wx.showLoading({
+      title: 'loading',
     })
-    
-
-
-
     // 获取当天排行榜
     db.collection('today').doc(app.dateFormat('YYYY-MM-DD'))
     .get()
@@ -94,7 +114,7 @@ Page({
       this.setData({
         todayList: res.data.data
       })
-      console.log(this.data.todayList)
+      this.liked(); // 加载已点赞
     })
     .catch(err => {
       console.log('今天还没有签到哦')
@@ -113,18 +133,25 @@ Page({
       console.log(err)
     })
 
+    var height = wx.getSystemInfoSync().windowHeight - 30;
+    console.log(height)
+    this.setData({
+      swiperHeight: height
+    })
+    
     let _this = this;
     setTimeout(() => {
-      var query = wx.createSelectorQuery().in(this);
+      let query = wx.createSelectorQuery().in(this);
       query.select('.rankingBg').boundingClientRect(function (e) {
-        console.log(height, otherHeight)
+        let height = wx.getSystemInfoSync().windowHeight - 30;
         let otherHeight = height - e.height - 10;
+        
         _this.setData({
           otherHeight: otherHeight
         })
       }).exec()
-    }, 500)
-
+      wx.hideLoading()
+    }, 2000)    
   },
 
   /**

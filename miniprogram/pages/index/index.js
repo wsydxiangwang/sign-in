@@ -3,19 +3,24 @@ const app = getApp(); // 获取全局数据
 
 Page({
   data: {
-    count: 0 // 坚持天数
+    count: 0, // 坚持天数
+    runningDay: 0, // 当前连续
+    longRunningDay: 0, // 最长连续
+    hours: ''
   },
   // 点击签到
   singnin: function(e){
 
     let _this = this;
-    let time = app.dateFormat('YYYY-MM-DD');
-    let hours = app.dateFormat('HH');
 
     // 获取用户信息
     wx.getSetting({
       complete: function (res) {
         if (res.authSetting['scope.userInfo']) { // 已授权
+
+          wx.showLoading({
+            title: '签到中...',
+          })
 
           // db.collection('userInfo').where({
           //   _openid: app.globalData.openId
@@ -30,110 +35,95 @@ Page({
           //   })
 
           //   return false;
-          // 获取当前用户的签到次数
+
+          // 获取当前用户
           db.collection('userInfo').where({
             _openid: app.globalData.openId
           })
             .get().then(res => {
 
-              
-              
-              // 判断今天是否签到
-              // if (res.data[0].lastTime == time){
-              //   wx.showToast({
-              //     title: '今天已签到！！',
-              //     icon: 'none',
-              //     duration: 2000
-              //   })
-              //   return;
-              // }
+              let todayTime = app.dateFormat('YYYY-MM-DD');
+              let todayHours = app.dateFormat('HH');
+              let todayHourss = app.dateFormat('HH:mm');
+              let lastTime = res.data[0].lastTime;
 
-              // if (hours >= 0 && hours < 5) {
-              //   // 未到签到时间
-              //   wx.showToast({
-              //     title: '未到签到时间',
-              //     duration: 2000
-              //   })
-              //   return;
-              // } else if (hours >= 9 && hours < 24) {
-              //   // 签到时间已过
-              //   wx.showToast({
-              //     title: '今天签到时间已过',
-              //     icon: 'none',
-              //     duration: 2000
-              //   })
-              //   return;
-              // } else {
-              //   console.log('签到时间')
-              // }
+              if (lastTime == todayTime){
+                wx.hideLoading()
+                wx.showToast({
+                  title: '今天已签到！！',
+                  icon: 'none',
+                  duration: 2000
+                })
+                return;
+              }
+
+              if (todayHours >= 0 && todayHours < 5) {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '童靴你起得真早啊，签到时间还没到哦~~',
+                  duration: 2000
+                })
+                return;
+
+              } else if (todayHours >= 9 && todayHours < 24) {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '说，你是不是睡懒觉了，时间等你等到花都谢了~~',
+                  icon: 'none',
+                  duration: 2000
+                })
+                return;
+              }
               
-              // 调用云函数进行更新 加一天
+              // 今天时间与最近签到时间做比较
+              let timeInterval = Math.abs(Date.parse(todayTime) - Date.parse(lastTime));
+                  timeInterval = Math.floor(timeInterval / (24 * 3600 * 1000));
+
+              let runningDay = res.data[0].runningDay,
+                  longRunningDay = res.data[0].longRunningDay;
+
+              if (timeInterval == 1){ // 当前连续 +1
+                runningDay++;
+              }else{
+                runningDay = 1;
+              }
+              if (runningDay > longRunningDay){ // 最高连续
+                longRunningDay = runningDay;               
+              }
+              
+              // 更新天数
               wx.cloud.callFunction({
                 name: 'signin',
                 data: {
                   action: 'count',
-                  lastTime: time,
-                  timeList: time
+                  lastTime: todayTime,
+                  runningDay: runningDay,
+                  lastHours: todayHourss,
+                  longRunningDay: longRunningDay,
                 }
               }).then(res => {
-                console.log('签到成功+1天')
-                _this.onLoad(); //更新页面签到天数
+
+                _this.addRank(); // 添加排行榜
+                _this.onLoad(); // 更新页面数据
+
+                wx.hideLoading()
+                wx.showToast({
+                  title: '签到成功',
+                  icon: 'none',
+                  duration: 2000
+                })
+
               }).catch(err => {
-                console.log('签到失败')
-                console.log(err)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '出问题了，可能是网络有点慌！',
+                  icon: 'none',
+                  duration: 2000
+                })
               })
-
-
-              let data = {
-                currentTime: app.dateFormat('HH:mm'),
-                openid: app.globalData.openId,
-                nickName: app.globalData.nickName,
-                avatarUrl: app.globalData.avatarUrl,
-                gender: app.globalData.gender,
-                like: 0
-              }
-
-              // 今日排行榜
-              db.collection('today').doc(time)
-                .get()
-                .then(res => {
-
-                  // 添加信息到今日排行榜
-                  wx.cloud.callFunction({
-                    name: 'signin',
-                    data: {
-                      action: 'today',
-                      _id: time,
-                      dataList: data
-                    }
-                  }).then(res => {
-                    console.log('添加信息到今日排行榜成功')
-                  }).catch(err => {
-                    console.log('添加信息到今日排行榜失败')
-                  })
-                })
-                .catch(err => {
-                  // 创建今日排行榜
-                  db.collection('today').add({
-                    data: {
-                      _id: time,
-                      data: [data]
-                    }
-                  }).then(res => {
-                    console.log('创建今日排行榜成功')
-                  }).catch(err => {
-                    console.log('创建今日排行榜失败')
-                    console.log(err)
-                  })
-                })
-
             })
-
-          
-
-
-          
         } else {
+          console.log('未授权')
           // 未授权则进入授权页面
           wx.navigateTo({
             url: '../login/login'
@@ -141,6 +131,47 @@ Page({
         }
       }
     })
+  },
+  // 今日排行榜
+  addRank(){
+    let todayTime = app.dateFormat('YYYY-MM-DD');
+    let data = {
+      currentTime: app.dateFormat('HH:mm'),
+      openid: app.globalData.openId,
+      nickName: app.globalData.nickName,
+      avatarUrl: app.globalData.avatarUrl,
+      gender: app.globalData.gender,
+      like: 0
+    }
+
+    db.collection('today').doc(todayTime)
+      .get()
+      .then(res => { // 添加信息到今日排行榜
+        wx.cloud.callFunction({
+          name: 'signin',
+          data: {
+            action: 'today',
+            _id: todayTime,
+            dataList: data
+          }
+        }).then(res => {
+          console.log('添加排行榜成功')
+        }).catch(err => {
+          console.log('添加排行榜失败')
+        })
+      })
+      .catch(err => { // 创建今日排行榜
+        db.collection('today').add({
+          data: {
+            _id: todayTime,
+            data: [data]
+          }
+        }).then(res => {
+          console.log('创建排行榜成功')
+        }).catch(err => {
+          console.log('创建排行榜失败')
+        })
+      })
   },
   // 排行榜
   ranking: function(e){
@@ -157,25 +188,42 @@ Page({
 
     // 获取用户信息
     wx.getSetting({
-      success: function (res) {
-        console.log(app.globalData.openId)
+      complete: function (res) {
         if (res.authSetting['scope.userInfo']) {
-          console.log('已授权')
-          // 获取当前用户的签到次数
-          db.collection('userInfo').where({
+          
+          console.log(app.globalData.openId)
+
+          db.collection('userInfo').where({ // 查找当前用户是否存在
             _openid: app.globalData.openId
           })
-            .get()
-            .then(res => {
-              console.log(res)
-              _this.setData({
-                count: res.data[0].count
-              })
-              console.log(res.data[0])
+            .get().then(res => {
+              if (res.data.length == 1) { // 用户存在 获取数据
+
+                db.collection('userInfo').where({
+                  _openid: app.globalData.openId
+                })
+                  .get()
+                  .then(res => {
+
+                    let hours = '';
+                    if (res.data[0].lastTime == app.dateFormat('YYYY-MM-DD')){
+                      hours = res.data[0].lastHours;
+                    }
+                    _this.setData({
+                      count: res.data[0].count,
+                      hours: hours,
+                      runningDay: res.data[0].runningDay,
+                      longRunningDay: res.data[0].longRunningDay,
+                    })
+
+                  })
+                  .catch(err => {
+                    console.log(err)
+                  })
+              }
             })
-            .catch(err => {
-              console.log(err)
-            })
+        }else{
+          console.log('未授权')
         }
       }
     })

@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    moodData: ''
+    moodData: '',
+    replyData: '',
+    replyName: ''
   },
   bindFormSubmit: function(e){
 
@@ -15,14 +17,23 @@ Page({
       title: '路途遥远，正在为你加快脚步中...',
     })
 
+    let id;
+    if (this.data.replyData){
+      id = this.data.replyData.data._id;
+    }else{
+      id = this.data.moodData.data._id;
+    } 
+
+    let time = app.dateFormat('YYYY/MM/DD HH:mm');
     let _this = this;
-    let id = this.data.moodData.data._id;
     let commentData = {
+      openId: app.globalData.openId,   // openid
       userName: app.globalData.nickName,   // 昵称
       avatarUrl: app.globalData.avatarUrl, // 头像
       content: e.detail.value.textarea,    // 内容
       createTime: db.serverDate(), // 服务端时间
-      time: app.dateFormat('YYYY-MM-DD HH:mm')   
+      time: time,
+      replyName: this.data.replyName 
     }
 
     // 更新数据库
@@ -42,9 +53,14 @@ Page({
         title: '为对方的世界增添一个了闪光点～～',
         duration: 2000
       })
-      setTimeout(function () {
+      setTimeout(() => {
         let data = {};
-        data.index = _this.data.moodData.index;
+        if (this.data.replyData) {
+          data.index = _this.data.replyData.index;
+        }else{
+          data.index = _this.data.moodData.index;
+        }
+        commentData.time = app.timestampFormat(time)
         data.data = commentData;
         getApp().globalData.newComment = data;
         wx.switchTab({
@@ -66,6 +82,12 @@ Page({
     eventChannel.on('acceptDataFromOpenerPage', function (data) {
       _this.setData({
         moodData: data
+      })
+    })
+    eventChannel.on('replyPageData', (data) => {
+      this.setData({
+        replyData: data,
+        replyName: data.data.comment[data.indexs].userName
       })
     })
   },

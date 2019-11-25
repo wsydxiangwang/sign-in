@@ -21,6 +21,9 @@ exports.main = async (event, context) => {
             data: {
               count: _.inc(1),
               lastTime: event.lastTime,
+              lastHours: event.lastHours,
+              runningDay: event.runningDay, 
+              longRunningDay: event.longRunningDay,
               // timeList: _.push(event.timeList)
             }
           })

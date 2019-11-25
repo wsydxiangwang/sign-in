@@ -1,20 +1,37 @@
 page{
-  background: #f5f5f5;
+  background: rgb(248,250,251);
 }
 .container{
-  padding: 30rpx;
+  padding-bottom: 30rpx;
+}
+
+.header{
+  /* height: 400rpx; */
+  background: #22b5ff;
+}
+.header image{
+  width: 100%;
+  /* height: 400rpx; */
+}
+.publish{
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 10px;
+  background: #22b5ff;
 }
 
 
 .mood-content{
-  padding: 30rpx 0;
+  padding-bottom: 30rpx;
 }
 .mood-item{
   background: #fff;
-  box-shadow: 0 0 15px #dedede;
-  padding: 30rpx;
-  border-radius: 8px;
-  margin-bottom: 25rpx;
+  padding: 40rpx;
+  margin-bottom: 20rpx;
+  border-radius: 4px;
 }
 .mood-head{
   height: 75rpx;
@@ -41,11 +58,22 @@ page{
   font-size: 26rpx;
 }
 .mood-head .title .name{
-  font-size: 30rpx;
+  font-size: 28rpx;
+  color: #317db9;
+  font-weight: 600;
 }
 .mood-head .title .time{
-  font-size: 24rpx;
-  color: #666;
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+  display: flex;
+  height: 20px;
+  line-height: 20px;
+}
+.mood-head .title .time .iconfont{
+  font-size: 28rpx;
+  margin-right: 6rpx;
+  display: flex;
 }
 
 .content{
@@ -53,6 +81,7 @@ page{
 }
 .content text{
   font-size: 26rpx;
+  letter-spacing: 1rpx;
   color: #333;
 }
 .content .image-list{
@@ -66,7 +95,7 @@ page{
   box-sizing: border-box;
   margin: 4rpx;
   font-size: 0;
-  border-radius: 8rpx;
+  border-radius: 15rpx;
   overflow: hidden;
 }
 .content .image-list.one .image-item{
@@ -86,33 +115,82 @@ page{
   height: 100%;
   box-sizing: border-box;
 }
+.content .address{
+  font-size: 24rpx; 
+  color: #00aaff;
+}
+.content .address .iconfont{
+  margin-right: 10rpx;
+}
+
 
 
 .mood-foot{
   display: flex;
   justify-content: space-between;
-  padding: 18rpx 0 0;
   border-top: 1px solid #f5f5f5;
 }
-.mood-foot .like{}
-.mood-foot .comment-num{}
-
-
-
-/* 查看图片 */
-.comment-list{
-  margin-top: 20rpx;
-  background: #f5f6f7;
-  padding: 12rpx;
-}
-.comment-list .comment-item{
+.mood-foot .foot-btn{
   font-size: 24rpx;
-  margin-bottom: 10rpx;
+  color: #666;
+  display: flex;
 }
-.comment-list .comment-name{
-  color: #03a9f4;
-  
+.mood-foot .like{
+  margin-right: 10px;
 }
-.comment-list .comment-content{
+.mood-foot .like .iconfont{
+  color: red;
+} 
+.mood-foot .comment .iconfont{
+  color: #00aaff;
+}
+.mood-foot .plane .iconfont{
+  font-weight: 600;
+  font-size: 40rpx;
+  color: #999;
+}
+
+
+.comment-list{
+  margin-top: 28rpx;
+}
+.comment-item{
+  display: flex;
+  padding: 16rpx 16rpx 16rpx 0;
+}
+.comment-avatar{
+  width: 60rpx;
+  height: 60rpx;  
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 18rpx;
+}
+.comment-avatar image{
+  width: 100%;
+  height: 100%;
+}
+.comment-flex{
+  flex: 1;
+}
+.comment-flex .comment-name{
+  color: #317db9;
+  font-size: 26rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment-flex .comment-name .time{
+  font-size: 20rpx;
+  color: #999;
+}
+.comment-flex .comment-content{
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  display: block;
   color: #333;
+  word-break: break-all;
+}
+.comment-flex .comment-content .reply{
+  color: #317db9;
+  margin-right: 8rpx;
 }

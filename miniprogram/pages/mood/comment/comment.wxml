@@ -2,7 +2,7 @@
   <view class="mood-publish">
     <view>有什么话想对 {{moodData.userName}} 说的吗，尽管来吧</view>
     <form bindsubmit="bindFormSubmit">
-      <textarea placeholder="留点空间给你写字" name="textarea"/>
+      <textarea placeholder="回复 {{replyName}}" name="textarea"/>
 
       <button form-type="submit"> 发表评论 </button>
     </form>

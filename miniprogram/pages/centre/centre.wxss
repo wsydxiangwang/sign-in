@@ -1,5 +1,10 @@
 .info{
   text-align: center;
+  background: #22b5ff;
+  color: #fff;
+  padding: 160rpx 0;
+  clip-path: inset(0 -40% 0 -40% round 0 0 100% 100%);
+  font-size: 28rpx;
 }
 .info .avatar{
   height: 100rpx;
@@ -9,5 +14,27 @@
   display: inline-block;
 }
 .info .name{
-  color: #000;
+  padding: 20rpx 0;
+}
+.info .signature{
+}
+
+.content{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 60rpx;
+}
+.content .item{
+  height: 160rpx;
+  width: calc(50% - 15rpx);
+  margin-bottom: 30rpx;
+  box-shadow: 0 0 10px #eee;
+  border-radius: 6px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666;
 }

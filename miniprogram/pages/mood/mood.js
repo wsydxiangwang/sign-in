@@ -111,7 +111,31 @@ Page({
   },
   // 回复评论
   reply: function(e){
-    console.log(e)
+    let index = e.currentTarget.dataset;
+    let replyMood = {};
+    replyMood.index = index.index;
+    replyMood.indexs = index.indexs;
+    replyMood.data = this.data.moodList[index.index];
+    // 获取用户信息
+    wx.getSetting({
+      complete: function (res) {
+        if (res.authSetting['scope.userInfo']) { // 已授权
+          // 传递当前的心情数据
+          wx.navigateTo({
+            url: 'comment/comment',
+            success(res) {
+              res.eventChannel.emit('replyPageData', replyMood)
+            }
+          })
+
+        } else {
+          // 未授权则进入授权页面
+          wx.navigateTo({
+            url: '../login/login'
+          })
+        }
+      }
+    })
   },
   // 预览图片
   view: function(e){
@@ -125,7 +149,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getData();
+    this.onPullDownRefresh();
   },
   getData() {
     // console.log(currentPage, currentPage * pageSize)
@@ -144,10 +168,15 @@ Page({
           
           // 时间戳转换 再追加数据
           res.data.forEach((item) => {
-            item.createTime = this.timestampFormat(item.createTime)
+            item.createTime = app.timestampFormat(item.createTime)
+            if(item.comment.length != 0){
+              item.comment.forEach((items) => {
+                items.time = app.timestampFormat(items.time)
+              })
+            }
           })
           let list = this.data.moodList.concat(res.data);
-
+          console.log(list)
           // 更新到页面
           this.setData({
             moodList: list,
@@ -171,57 +200,27 @@ Page({
         }
       })
   },
-  timestampFormat: function(timestamp) {
-    function zeroize(num) {
-      return(String(num).length == 1 ? '0' : '') + num;
-    };
-
-    var curTimestamp = parseInt(new Date().getTime() / 1000);
-    var timestamp = Date.parse(timestamp) / 1000;
-    var timestampDiff = curTimestamp - timestamp; // 参数时间戳与当前时间戳相差秒数
-
-    var curDate = new Date(curTimestamp * 1000); // 当前时间日期对象
-    var tmDate = new Date(timestamp * 1000);  // 参数时间戳转换成的日期对象
-
-    var Y = tmDate.getFullYear(), m = tmDate.getMonth() + 1, d = tmDate.getDate();
-    var H = tmDate.getHours(), i = tmDate.getMinutes(), s = tmDate.getSeconds();
-
-    if (timestampDiff < 60) {
-      return "刚刚";
-    } else if (timestampDiff < 3600) {
-      return Math.floor(timestampDiff / 60) + "分钟前";
-    } else if (curDate.getFullYear() == Y && curDate.getMonth() + 1 == m && curDate.getDate() == d) {
-      return '今天' + zeroize(H) + ':' + zeroize(i);
-    } else {
-      var newDate = new Date((curTimestamp - 86400) * 1000); // 参数中的时间戳加一天转换成的日期对象
-      if (newDate.getFullYear() == Y && newDate.getMonth() + 1 == m && newDate.getDate() == d) {
-        return '昨天' + zeroize(H) + ':' + zeroize(i);
-      } else if (curDate.getFullYear() == Y) {
-        return zeroize(m) + '月' + zeroize(d) + '日 ' + zeroize(H) + ':' + zeroize(i);
-      } else {
-        return Y + '年' + zeroize(m) + '月' + zeroize(d) + '日 ' + zeroize(H) + ':' + zeroize(i);
-      }
-    }
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 评论实时更新
     if (getApp().globalData.newComment){
       let index = getApp().globalData.newComment.index;
       let data = getApp().globalData.newComment.data;
       let comment = this.data.moodList[index].comment.concat(data);
       let arr = 'moodList[' + index + '].comment';
-      // 评论实时更新
       this.setData({
         [arr]: comment
       })
+      getApp().globalData.newComment = '';
     }
   },
 

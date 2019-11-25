@@ -1,6 +1,11 @@
 <!--miniprogram/pages/mood/mood.wxml-->
 <view class="container">
-  <view bindtap="publish">发布心情</view>
+
+  <view class="header">
+    <image src="/images/1.jpg" mode="widthFix"></image>
+  </view>
+
+  <!-- <view bindtap="publish" class="publish">发布心情</view> -->
 
   <view class="mood-content">
     <block wx:if="{{moodList.length}}">
@@ -12,7 +17,10 @@
           </view>
           <view class="title">
             <text class="name">{{item.userName}}</text>
-            <text class="time">{{item.createTime}}</text>
+            <view class="time">
+              <!-- <icon class="iconfont iconshijian1"></icon> -->
+              <text>{{item.createTime}}</text>
+            </view>
           </view>
         </view>
 
@@ -28,21 +36,50 @@
           </block>
 
           <block wx:if="{{item.address}}">
-            <view class="address">{{item.address}}</view>
+            <view class="address"><icon class="iconfont iconplace"></icon>{{item.address}}</view>
           </block>
         </view>
 
         <view class="mood-foot">
-          <text class="like" bindtap="like" data-index="{{index}}" >点赞{{item.like}}</text>
-          <text class="comment" bindtap="comment" data-index="{{index}}">评论{{item.comment.length}}</text>
-          <text class="view" bindtap="view">浏览{{item.view}}</text>
+          <view class="foot-btn">
+            <view class="like" bindtap="like" data-index="{{index}}" >
+              <icon class="iconfont iconheart"></icon>
+              {{item.like}}
+            </view>
+            <view class="comment" bindtap="comment" data-index="{{index}}">
+              <icon class="iconfont iconpinglun"></icon>
+              {{item.comment.length}}
+            </view>
+          </view>
+          <view class="plane" bindtap="plane">
+            <icon class="iconfont iconzhifeiji"></icon>
+          </view>
         </view>
 
         <block wx:if="{{item.comment.length > 0}}">
           <view class="comment-list">
-            <view class="comment-item" wx:for="{{item.comment}}" wx:for-item="items" data-index="{{index}}" wx:key="items" bindtap="reply">
-              <text class="comment-name">{{items.userName}}</text>
-              <text class="comment-content">：{{items.content}}</text>
+            <view 
+              class="comment-item" 
+              wx:for="{{item.comment}}" 
+              wx:for-item="items" 
+              wx:for-index="indexs" 
+              data-index="{{index}}"
+              data-indexs="{{indexs}}" 
+              wx:key="items" 
+              bindtap="reply"
+            >
+              <view class="comment-avatar">
+                <image src="{{items.avatarUrl}}" mode="widthFix"></image>
+              </view>
+              <view class="comment-flex">
+                <view class="comment-name">
+                  <text class="name">{{items.userName}}</text>
+                  <text class="time">{{items.time}}</text>
+                </view>
+                <view class="comment-content">
+                  <text wx:if="{{items.replyName}}" class="reply">@{{items.replyName}}</text>{{items.content}}
+                </view>
+              </view>
             </view>
           </view>
         </block>

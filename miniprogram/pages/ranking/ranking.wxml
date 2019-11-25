@@ -13,7 +13,8 @@
         <block wx:if="{{todayList.length}}">
 
           <view class="header">
-            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index < 3}}">
+            <!-- 第二名 -->
+            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index == 1}}">
               <view class="info">
                 <view class="image">
                   <image src="{{item.avatarUrl}}"></image>
@@ -24,7 +25,43 @@
               </view>
               <view class="bottom">
                 <view class="time">{{item.currentTime}}</view>
-                <view class="like" bindtap="like" data-index="{{index}}">
+                <view class="like {{item.liked ? 'liked' : ''}}" bindtap="like" data-index="{{index}}">
+                  <text class="iconfont iconheart"></text>
+                  <text class="num">{{item.like}}</text>
+                </view>
+              </view>
+            </view>
+            <!-- 第一名 -->
+            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index == 0}}">
+              <view class="info">
+                <view class="image">
+                  <image src="{{item.avatarUrl}}"></image>
+                </view>
+                <view class="title">
+                  <text class="tit">{{item.nickName}}</text>
+                </view>
+              </view>
+              <view class="bottom">
+                <view class="time">{{item.currentTime}}</view>
+                <view class="like {{item.liked ? 'liked' : ''}}" bindtap="like" data-index="{{index}}">
+                  <text class="iconfont iconheart"></text>
+                  <text class="num">{{item.like}}</text>
+                </view>
+              </view>
+            </view>
+            <!-- 第三名 -->
+            <view class="item" wx:for="{{todayList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index == 2}}">
+              <view class="info">
+                <view class="image">
+                  <image src="{{item.avatarUrl}}"></image>
+                </view>
+                <view class="title">
+                  <text class="tit">{{item.nickName}}</text>
+                </view>
+              </view>
+              <view class="bottom">
+                <view class="time">{{item.currentTime}}</view>
+                <view class="like {{item.liked ? 'liked' : ''}}" bindtap="like" data-index="{{index}}">
                   <text class="iconfont iconheart"></text>
                   <text class="num">{{item.like}}</text>
                 </view>
@@ -51,7 +88,7 @@
 
                 <view class="right">
                   <view class="time">{{item.currentTime}}</view>
-                  <view class="like" bindtap="like" data-index="{{index}}">
+                  <view class="like {{item.liked ? 'liked' : ''}}" bindtap="like" data-index="{{index}}">
                     <text class="iconfont iconheart"></text>
                     <text class="num">{{item.like}}</text>
                   </view>
@@ -61,9 +98,6 @@
           </view>
 
         </block>
-
-          
-
         <block wx:else>    
           <view>
             还没人签到
@@ -74,7 +108,8 @@
 
       <!-- 总排行榜 -->
       <swiper-item class="ranking-item">
-        <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{item.count != 0}}">
+
+        <!-- <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{item.count != 0}}">
           <view class="rank">{{index + 1}}</view>
           <view class="info">
             <view class="image">
@@ -89,7 +124,89 @@
             <text>{{item.count}}</text>
             <text>天</text>
           </view>
+        </view> -->
+
+        <view class="header">
+          <!-- 第二名 -->
+          <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index == 1}}">
+            <view class="info">
+              <view class="image">
+                <image src="{{item.avatarUrl}}"></image>
+              </view>
+              <view class="title">
+                <text class="tit">{{item.nickName}}</text>
+                <text class="des">这位童靴是吃货，签名这么可爱，都给吃了</text>
+              </view>
+            </view>
+            <view class="count">
+              <text>{{item.count}}</text>
+              <text>天</text>
+            </view>
+          </view>
+          <!-- 第一名 -->
+          <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index == 0}}">
+            <view class="info">
+              <view class="image">
+                <image src="{{item.avatarUrl}}"></image>
+              </view>
+              <view class="title">
+                <text class="tit">{{item.nickName}}</text>
+                <text class="des">这位童靴是吃货，签名这么可爱，都给吃了</text>
+              </view>
+            </view>
+            <view class="count">
+              <text>{{item.count}}</text>
+              <text>天</text>
+            </view>
+
+          </view>
+          <!-- 第三名 -->
+          <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index == 2}}">
+            <view class="info">
+              <view class="image">
+                <image src="{{item.avatarUrl}}"></image>
+              </view>
+              <view class="title">
+                <text class="tit">{{item.nickName}}</text>
+                <text class="des">这位童靴是吃货，签名这么可爱，都给吃了</text>
+              </view>
+            </view>
+          
+            <view class="count">
+              <text>{{item.count}}</text>
+              <text>天</text>
+            </view>
+
+          </view>
         </view>
+
+        <image class="rankingBg" src="../../images/rankingBg.png"></image>
+
+        <view class="other" style="height:{{otherHeight}}px">
+          <view class="other-box">
+            <view class="item" wx:for="{{totalList}}" data-index="{{index}}" wx:item="item" wx:key wx:if="{{index > 3}}">
+
+              <view class="rank">{{index + 1}}</view>
+
+              <view class="info">
+                <view class="image">
+                  <image src="{{item.avatarUrl}}"></image>
+                </view>
+                <view class="title">
+                  <text class="tit">{{item.nickName}}</text>
+                  <text class="des">这位童靴是吃货，签名这么可爱，都给吃了</text>
+                </view>
+              </view>
+
+              <view class="count">
+                <text>{{item.count}}</text>
+                <text>天</text>
+              </view>
+
+            </view>
+          </view>
+        </view>
+        
       </swiper-item>
 
   </swiper>

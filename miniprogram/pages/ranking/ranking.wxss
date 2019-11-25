@@ -59,7 +59,7 @@ page, .container{
   width: 100%;
 }
 .header .item .bottom{
-  margin-top: 90rpx;
+  margin-top: 70rpx;
 }
 .header .item .time{
   font-size: 30rpx;
@@ -68,10 +68,10 @@ page, .container{
 .header .item .like{
   position: relative;
 }
-.header .item .like.done .iconfont{
-  color: red;
+.header .item .like.liked .iconfont{
+  color: #ff00c6;
 }
-.header .item .like.done .num{
+.header .item .like.liked .num{
   color: #fff;
 }
 
@@ -87,6 +87,7 @@ page, .container{
   border-radius: 50%;
   overflow: hidden;
   margin: auto;
+  border: 2px solid #fff;
 }
 .header .item .image image{
   height: 100%;
@@ -174,7 +175,7 @@ page, .container{
   text-align: center;
   position: relative;
 }
-.item .like.done .iconfont{
+.item .like.liked .iconfont{
   color: red;
 }
 .item .like .iconfont{
