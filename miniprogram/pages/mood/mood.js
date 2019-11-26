@@ -39,7 +39,7 @@ Page({
   },
 
   // 点赞
-  like: function(e){
+  like(e){
     let _this = this;
     let index = e.currentTarget.dataset.index;
     let num = this.data.moodList[index];
@@ -84,7 +84,7 @@ Page({
     })
   },
   // 评论
-  comment: function (e) {
+  comment(e) {
     let index = e.currentTarget.dataset.index;
     let currentMood = {};
 
@@ -114,7 +114,7 @@ Page({
     
   },
   // 回复评论
-  reply: function(e){
+  reply(e){
     let index = e.currentTarget.dataset;
     let replyMood = {};
     replyMood.index = index.index;
@@ -140,6 +140,9 @@ Page({
         }
       }
     })
+  },
+  plane(){
+    
   },
   /**
    * 生命周期函数--监听页面加载

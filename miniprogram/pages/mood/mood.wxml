@@ -89,6 +89,10 @@
     </block>
   </view>
 
+  <view class="plane-box">
+    <text>怎么走，怎么还原，怎么飞回那单纯的世界 <br />
+      折好的飞机里面，写着从前！！</text>
+  </view>
   
   <view class="loading" hidden="{{!loadMore}}">正在载入更多...</view>
   <view class="loading" hidden="{{!loadAll}}">已加载全部</view>

@@ -210,3 +210,18 @@ page{
   color: #317db9;
   margin-right: 8rpx;
 }
+
+.plane-box{
+  position: fixed;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  line-height: 44rpx;
+  font-size: 24rpx;
+  background: #fff;
+  color: #22b5ff;
+  padding: 40rpx;
+  text-align: center;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
