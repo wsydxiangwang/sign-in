@@ -191,37 +191,44 @@ Page({
       complete: function (res) {
         if (res.authSetting['scope.userInfo']) {
           
-          console.log(app.globalData.openId)
+          let time = setInterval(() => { // 避免第一次加载获取不到openid
 
-          db.collection('userInfo').where({ // 查找当前用户是否存在
-            _openid: app.globalData.openId
-          })
-            .get().then(res => {
-              if (res.data.length == 1) { // 用户存在 获取数据
+            if (app.globalData.openId) {
+              console.log(1)
+              clearTimeout(time)
 
-                db.collection('userInfo').where({
-                  _openid: app.globalData.openId
-                })
-                  .get()
-                  .then(res => {
+              db.collection('userInfo').where({ // 查找当前用户是否存在
+                _openid: app.globalData.openId
+              })
+                .get().then(res => {
+                  if (res.data.length == 1) { // 用户存在 获取数据
 
-                    let hours = '';
-                    if (res.data[0].lastTime == app.dateFormat('YYYY-MM-DD')){
-                      hours = res.data[0].lastHours;
-                    }
-                    _this.setData({
-                      count: res.data[0].count,
-                      hours: hours,
-                      runningDay: res.data[0].runningDay,
-                      longRunningDay: res.data[0].longRunningDay,
+                    db.collection('userInfo').where({
+                      _openid: app.globalData.openId
                     })
+                      .get()
+                      .then(res => {
 
-                  })
-                  .catch(err => {
-                    console.log(err)
-                  })
-              }
-            })
+                        let hours = '';
+                        if (res.data[0].lastTime == app.dateFormat('YYYY-MM-DD')) {
+                          hours = res.data[0].lastHours;
+                        }
+                        _this.setData({
+                          count: res.data[0].count,
+                          hours: hours,
+                          runningDay: res.data[0].runningDay,
+                          longRunningDay: res.data[0].longRunningDay,
+                        })
+
+                      })
+                      .catch(err => {
+                        console.log(err)
+                      })
+                  }
+                })
+            }
+          }, 100)
+          
         }else{
           console.log('未授权')
         }

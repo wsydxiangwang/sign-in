@@ -44,6 +44,7 @@ Page({
     let index = e.currentTarget.dataset.index;
     let num = this.data.moodList[index];
     let arr = 'moodList[' + index + '].like';
+    let liked = 'moodList[' + index + '].liked';
     let moodLike = num._id;
 
     wx.getStorage({
@@ -61,8 +62,11 @@ Page({
         wx.setStorageSync(`moodLike-${moodLike}`, 'true'); // 设置缓存
 
         _this.setData({  // 更新页面
-          [arr]: num.like + 1
+          [arr]: num.like + 1,
+          [liked]: true
         })
+
+        console.log(_this.data.moodList)
 
         // 调用云函数更新
         wx.cloud.callFunction({
@@ -137,14 +141,6 @@ Page({
       }
     })
   },
-  // 预览图片
-  view: function(e){
-    wx.getStorageInfo({
-      success(res){
-        console.log(res)
-      }
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -168,15 +164,27 @@ Page({
           
           // 时间戳转换 再追加数据
           res.data.forEach((item) => {
+
+            // 同步获取本地数据
+            let idArr = item._id;
+            try {
+              var value = wx.getStorageSync(`moodLike-${idArr}`)
+              if (value) {
+                item.liked = true;
+              }
+            } catch (e) {}
+
             item.createTime = app.timestampFormat(item.createTime)
             if(item.comment.length != 0){
               item.comment.forEach((items) => {
                 items.time = app.timestampFormat(items.time)
               })
             }
+
           })
           let list = this.data.moodList.concat(res.data);
           console.log(list)
+
           // 更新到页面
           this.setData({
             moodList: list,

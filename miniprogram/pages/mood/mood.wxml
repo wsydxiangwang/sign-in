@@ -5,7 +5,7 @@
     <image src="/images/1.jpg" mode="widthFix"></image>
   </view>
 
-  <!-- <view bindtap="publish" class="publish">发布心情</view> -->
+  <view class="mood-title" bindtap="publish">嘿，你好吗，欢迎光临心情小镇，点我来发表心情吧！！！</view>
 
   <view class="mood-content">
     <block wx:if="{{moodList.length}}">
@@ -42,7 +42,7 @@
 
         <view class="mood-foot">
           <view class="foot-btn">
-            <view class="like" bindtap="like" data-index="{{index}}" >
+            <view class="like {{item.liked ? 'done' : ''}}" bindtap="like" data-index="{{index}}" >
               <icon class="iconfont iconheart"></icon>
               {{item.like}}
             </view>
@@ -60,6 +60,7 @@
           <view class="comment-list">
             <view 
               class="comment-item" 
+              hover-class="hover"
               wx:for="{{item.comment}}" 
               wx:for-item="items" 
               wx:for-index="indexs" 
