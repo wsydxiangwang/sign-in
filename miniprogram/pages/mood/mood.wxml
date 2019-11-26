@@ -90,8 +90,9 @@
   </view>
 
   <view class="plane-box">
+    <image src="/images/plane.jpg"></image>
     <text>怎么走，怎么还原，怎么飞回那单纯的世界 <br />
-      折好的飞机里面，写着从前！！</text>
+      折好的飞机里面，写着从前！！</text> 
   </view>
   
   <view class="loading" hidden="{{!loadMore}}">正在载入更多...</view>
