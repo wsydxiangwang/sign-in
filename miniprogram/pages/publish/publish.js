@@ -161,10 +161,10 @@ Page({
             duration: 2000
           })
           
-          const pages = getCurrentPages();
-          const prePage = pages[pages.length - 2]
-          ~prePage.onLoad && prePage.onLoad()
           setTimeout(() => {
+            const pages = getCurrentPages();
+            const prePage = pages[pages.length - 2]
+            prePage.onLoad()
             wx.switchTab({
               url: '/pages/mood/mood'
             });
@@ -198,10 +198,12 @@ Page({
           title: '心情发布成功，每天都要开心哦，加油～～',
           duration: 2000
         })
-        const pages = getCurrentPages();
-        const prePage = pages[pages.length - 2]
-        ~prePage.onLoad && prePage.onLoad()
+
         setTimeout(() => {
+          const pages = getCurrentPages();
+          const prePage = pages[pages.length - 2]
+          console.log(prePage)
+          prePage.onLoad()
           wx.switchTab({
             url: '/pages/mood/mood'
           });
