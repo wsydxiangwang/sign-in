@@ -155,9 +155,7 @@ Page({
     })
   },
   plane(){
-<<<<<<< HEAD
     clearTimeout(time)
-
     var time = null;
     this.setData({
       planeActive: true
@@ -167,9 +165,6 @@ Page({
         planeActive: false
       })
     }, 3000)
-=======
-    
->>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
   },
   /**
    * 生命周期函数--监听页面加载

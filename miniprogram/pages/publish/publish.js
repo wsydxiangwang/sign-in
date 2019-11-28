@@ -204,7 +204,8 @@ Page({
           wx.switchTab({
             url: '/pages/mood/mood',
             success: function(e) {
-              var page = getCurrentPages().pop();
+              var page = getCurrentPages().shift();
+              console.log(page)
               if (page == undefined || page == null) return;
               page.onLoad();
             }
