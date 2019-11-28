@@ -40,7 +40,7 @@ Page({
   },
 
   // 点赞
-  like: function(e){
+  like(e){
     let _this = this;
     let index = e.currentTarget.dataset.index;
     let num = this.data.moodList[index];
@@ -97,7 +97,7 @@ Page({
 
   },
   // 评论
-  comment: function (e) {
+  comment(e) {
     let index = e.currentTarget.dataset.index;
     let currentMood = {};
 
@@ -127,7 +127,7 @@ Page({
     
   },
   // 回复评论
-  reply: function(e){
+  reply(e){
     let index = e.currentTarget.dataset;
     let replyMood = {};
     replyMood.index = index.index;
@@ -155,6 +155,7 @@ Page({
     })
   },
   plane(){
+<<<<<<< HEAD
     clearTimeout(time)
 
     var time = null;
@@ -166,6 +167,9 @@ Page({
         planeActive: false
       })
     }, 3000)
+=======
+    
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
   },
   /**
    * 生命周期函数--监听页面加载

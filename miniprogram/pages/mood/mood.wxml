@@ -89,13 +89,23 @@
     </block>
   </view>
 
+<<<<<<< HEAD
   <view class="plane-box {{planeActive ? 'active' : ''}}">
+=======
+  <view class="plane-box">
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
     <image src="/images/plane.jpg"></image>
     <text>怎么走，怎么还原，怎么飞回那单纯的世界 <br />
       折好的飞机里面，写着从前！！</text> 
   </view>
+<<<<<<< HEAD
 
   <view class="loading" hidden="{{!loadMore}}"></view>
   <view class="over" hidden="{{!loadAll}}">已加载全部</view>
+=======
+  
+  <view class="loading" hidden="{{!loadMore}}">正在载入更多...</view>
+  <view class="loading" hidden="{{!loadAll}}">已加载全部</view>
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
 
 </view>

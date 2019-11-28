@@ -208,6 +208,7 @@ page{
   margin-right: 8rpx;
 }
 
+<<<<<<< HEAD
 .over{
   text-align: center;
   font-size: 26rpx;
@@ -265,6 +266,8 @@ page{
 }
 
 
+=======
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
 .plane-box{
   position: fixed;
   top: 30%;
@@ -278,6 +281,7 @@ page{
   border-radius: 10px;
   box-sizing: border-box;
   overflow: hidden;
+<<<<<<< HEAD
   /* opacity: 0; */
   /* visibility: hidden; */
   transition: all .3s;
@@ -286,6 +290,10 @@ page{
   opacity: 1;
   visibility: visible;
   animation: 0.5s plane ease-out;
+=======
+  /* transform: translateY(-50%) */
+  display: none;
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
 }
 .plane-box::after{
   content: '';
@@ -294,8 +302,11 @@ page{
   position: fixed;
   top: 0;
   left: 0;
+<<<<<<< HEAD
   bottom: 0;
   right: 0;
+=======
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
   z-index: -1;
   background: #fff;
 
@@ -311,6 +322,7 @@ page{
   transform: translateY(-50%);
   width: 100%;
   color: #fff;
+<<<<<<< HEAD
 }
 
 @keyframes plane{
@@ -322,4 +334,6 @@ page{
     opacity: 1;
     top: 30%;
   }
+=======
+>>>>>>> f0219d454873bd6dff25e168e781b7295fe7b2b9
 }
