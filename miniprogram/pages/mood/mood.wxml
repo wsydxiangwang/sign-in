@@ -46,7 +46,7 @@
               <icon class="iconfont iconheart"></icon>
               {{item.like}}
             </view>
-            <view class="comment" bindtap="comment" bindtap="plane" data-index="{{index}}">
+            <view class="comment" bindtap="comment" bindtap="comment" data-index="{{index}}">
               <icon class="iconfont iconpinglun"></icon>
               {{item.comment.length}}
             </view>

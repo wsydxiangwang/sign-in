@@ -160,17 +160,16 @@ Page({
             title: '心情发布成功，每天都要开心哦，加油～～',
             duration: 2000
           })
-          setTimeout(function () {
-            // 发表成功回到心情页面，并更新数据
+          
+          const pages = getCurrentPages();
+          const prePage = pages[pages.length - 2]
+          ~prePage.onLoad && prePage.onLoad()
+          setTimeout(() => {
             wx.switchTab({
-              url: '/pages/mood/mood',
-              success: function (e) {
-                var page = getCurrentPages().pop();
-                if (page == undefined || page == null) return;
-                page.onLoad();
-              }
-            })
+              url: '/pages/mood/mood'
+            });
           }, 2000)
+
         }).catch(err => {
           wx.hideLoading();
           wx.showToast({
@@ -199,18 +198,15 @@ Page({
           title: '心情发布成功，每天都要开心哦，加油～～',
           duration: 2000
         })
-        setTimeout(function () {
-          // 发表成功回到心情页面，并更新数据
+        const pages = getCurrentPages();
+        const prePage = pages[pages.length - 2]
+        ~prePage.onLoad && prePage.onLoad()
+        setTimeout(() => {
           wx.switchTab({
-            url: '/pages/mood/mood',
-            success: function(e) {
-              var page = getCurrentPages().shift();
-              console.log(page)
-              if (page == undefined || page == null) return;
-              page.onLoad();
-            }
-          })
+            url: '/pages/mood/mood'
+          });
         }, 2000)
+
       }).catch(err => {
         wx.hideLoading();
         wx.showToast({
