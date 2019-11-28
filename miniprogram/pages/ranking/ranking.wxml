@@ -99,7 +99,7 @@
 
         </block>
         <block wx:else>    
-          <view>
+          <view class="zero">
             还没人签到
           </view>
         </block>

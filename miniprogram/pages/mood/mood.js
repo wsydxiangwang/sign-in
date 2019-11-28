@@ -9,6 +9,7 @@ Page({
     moodList: [], // 心情列表
     loadMore: false,
     loadAll: false,
+    planeActive: false
   },
   publish: function(e){
     // 获取用户信息
@@ -43,37 +44,48 @@ Page({
     let _this = this;
     let index = e.currentTarget.dataset.index;
     let num = this.data.moodList[index];
+    let moodId = num._id;
+    // let moodLike = num._id;
+
     let arr = 'moodList[' + index + '].like';
     let liked = 'moodList[' + index + '].liked';
-    let moodLike = num._id;
 
     wx.getStorage({
-      key: `moodLike-${moodLike}`,
-      success(res) {
-        // 已点赞
-        wx.showToast({
-          icon: "none",
-          title: '每人只能给予一次鼓励哦～',
-        })
-        return false;
-      },
-      fail(err){
-        // 未点赞
-        wx.setStorageSync(`moodLike-${moodLike}`, 'true'); // 设置缓存
+      key: 'moodLike',
+      complete(res) {
+
+        let data = [];
+        if (res.data) {
+          data = res.data;
+          for (let i in data) {
+            if (data[i].value == moodId) {
+              wx.showToast({
+                icon: "none",
+                title: '每人只能给予一次鼓励哦～',
+              })
+              return false;
+            }
+          }
+        }
+
+        let newData = {
+          id: index,
+          value: moodId
+        }
+
+        data.push(newData);
+        wx.setStorageSync('moodLike', data);
 
         _this.setData({  // 更新页面
           [arr]: num.like + 1,
           [liked]: true
         })
 
-        console.log(_this.data.moodList)
-
-        // 调用云函数更新
         wx.cloud.callFunction({
           name: 'mood',
           data: {
             action: 'like',
-            id: num._id
+            id: moodId
           }
         }).then(res => {
           console.log('update: ' + res.result.stats.updated)
@@ -82,6 +94,7 @@ Page({
         })
       }
     })
+
   },
   // 评论
   comment: function (e) {
@@ -141,6 +154,19 @@ Page({
       }
     })
   },
+  plane(){
+    clearTimeout(time)
+
+    var time = null;
+    this.setData({
+      planeActive: true
+    })
+    time = setTimeout(() => {
+      this.setData({
+        planeActive: false
+      })
+    }, 3000)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -168,9 +194,13 @@ Page({
             // 同步获取本地数据
             let idArr = item._id;
             try {
-              var value = wx.getStorageSync(`moodLike-${idArr}`)
-              if (value) {
-                item.liked = true;
+              let value = wx.getStorageSync('moodLike');
+              if(value){
+                value.forEach((items) => {
+                    if(items.value == idArr){
+                      item.liked = true;
+                    }
+                  })
               }
             } catch (e) {}
 

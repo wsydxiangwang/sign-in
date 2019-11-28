@@ -47,33 +47,33 @@ Page({
               let todayHourss = app.dateFormat('HH:mm');
               let lastTime = res.data[0].lastTime;
 
-              if (lastTime == todayTime){
-                wx.hideLoading()
-                wx.showToast({
-                  title: '今天已签到！！',
-                  icon: 'none',
-                  duration: 2000
-                })
-                return;
-              }
+              // if (lastTime == todayTime){
+              //   wx.hideLoading()
+              //   wx.showToast({
+              //     title: '今天已签到！！',
+              //     icon: 'none',
+              //     duration: 2000
+              //   })
+              //   return;
+              // }
 
-              if (todayHours >= 0 && todayHours < 5) {
-                wx.hideLoading()
-                wx.showToast({
-                  title: '童靴你起得真早啊，签到时间还没到哦~~',
-                  duration: 2000
-                })
-                return;
+              // if (todayHours >= 0 && todayHours < 5) {
+              //   wx.hideLoading()
+              //   wx.showToast({
+              //     title: '童靴你起得真早啊，签到时间还没到哦~~',
+              //     duration: 2000
+              //   })
+              //   return;
 
-              } else if (todayHours >= 9 && todayHours < 24) {
-                wx.hideLoading()
-                wx.showToast({
-                  title: '说，你是不是睡懒觉了，时间等你等到花都谢了~~',
-                  icon: 'none',
-                  duration: 2000
-                })
-                return;
-              }
+              // } else if (todayHours >= 9 && todayHours < 24) {
+              //   wx.hideLoading()
+              //   wx.showToast({
+              //     title: '说，你是不是睡懒觉了，时间等你等到花都谢了~~',
+              //     icon: 'none',
+              //     duration: 2000
+              //   })
+              //   return;
+              // }
               
               // 今天时间与最近签到时间做比较
               let timeInterval = Math.abs(Date.parse(todayTime) - Date.parse(lastTime));

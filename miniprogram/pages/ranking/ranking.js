@@ -26,24 +26,35 @@ Page({
     let liked = 'todayList[' + index + '].liked';
 
     wx.getStorage({
-      key: `rankLike-${openid}`,
-      success(res) {
-        // 已点赞
-        wx.showToast({
-          icon: "none",
-          title: '每人只能给予一次鼓励哦～',
-        })
-        return false;
-      },
-      fail(err) {
-        // 未点赞
-        wx.setStorageSync(`rankLike-${openid}`, index); // 设置缓存
+      key: 'rankLike',
+      complete(res){
+
+        let data = [];
+        if(res.data){
+          data = res.data;
+          for (let i in data) {
+            if (data[i].value == openid){
+              wx.showToast({
+                icon: "none",
+                title: '每人只能给予一次鼓励哦～',
+              })
+              return false;
+            }
+          }
+        }
+
+        let newData = {
+          id: index,
+          value: openid
+        }
+        
+        data.push(newData);
+        wx.setStorageSync('rankLike', data);
 
         _this.setData({  // 更新页面
           [arr]: num.like + 1,
           [liked]: true
         })
-        console.log(num)
 
         wx.cloud.callFunction({
           name: 'signin',
@@ -57,6 +68,7 @@ Page({
         }).catch(err => {
           console.log(err)
         })
+       
       }
     })
   },
@@ -79,23 +91,20 @@ Page({
   // 获取已点赞
   liked(e) {
     let _this = this;
-    wx.getStorageInfo({
+    wx.getStorage({
+      key: 'rankLike',
       success(res) {
-        let keyArr = res.keys;
-        keyArr.forEach((item) => {
-          wx.getStorage({
-            key: item,
-            success(res) {
-              let index = res.data;
-              let num = _this.data.todayList[index];
-              console.log(num)
-              let liked = 'todayList[' + index + '].liked';
-              _this.setData({  // 更新页面
-                [liked]: true
-              })
-              console.log(num)
-            }
+        let data = res.data;
+        data.forEach((item) => {
+          
+          let index = item.id;
+          let num = _this.data.todayList[index];
+              
+          let liked = 'todayList[' + index + '].liked';
+          _this.setData({  // 更新页面
+            [liked]: true
           })
+          
         })
       }
     })
