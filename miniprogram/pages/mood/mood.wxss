@@ -21,6 +21,19 @@ page{
   border-bottom: 1px solid #f6f7f8;
   text-align: center;
 }
+.message{
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 10rpx;
+}
+.message text{
+  background: #fff;
+  font-size: 12px;
+  display: line-block;
+  padding: 0 10px;
+  color: #666;
+}
 .publish{
   height: 80px;
   display: flex;
@@ -154,6 +167,10 @@ page{
   font-weight: 600;
   font-size: 40rpx;
   color: #bbb;
+}
+.mood-foot .plane .icondelete{
+  font-weight: 400;
+  font-size: 34rpx;
 }
 
 

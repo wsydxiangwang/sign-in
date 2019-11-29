@@ -90,6 +90,13 @@
 					"id": -1,
 					"name": "pages/centre/calendar/calendar",
 					"pathName": "pages/centre/calendar/calendar",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mood/message/message",
+					"pathName": "pages/mood/message/message",
 					"scene": null
 				}
 			]

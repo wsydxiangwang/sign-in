@@ -26,16 +26,13 @@ Page({
             title: '登录成功',
             duration: 2000
           })
-          setTimeout(function () {
-            // 登录成功返回，并更新数据
+          setTimeout(() => {
+            const pages = getCurrentPages();
+            const prePage = pages[pages.length - 2]
+            prePage.onLoad()
             wx.switchTab({
-              url: '/pages/index/index',
-              success: function (e) {
-                var page = getCurrentPages().pop();
-                if (page == undefined || page == null) return;
-                page.onLoad();
-              }
-            })
+              url: '/pages/index/index'
+            });
           }, 2000)
 
         } else {// 用户不存在，添加
@@ -60,16 +57,13 @@ Page({
               title: '登录成功',
               duration: 2000
             })
-            setTimeout(function () {
-              // 登录成功返回，并更新数据
+            setTimeout(() => {
+              const pages = getCurrentPages();
+              const prePage = pages[pages.length - 2]
+              prePage.onLoad()
               wx.switchTab({
-                url: '/pages/index/index',
-                success: function (e) {
-                  var page = getCurrentPages().pop();
-                  if (page == undefined || page == null) return;
-                  page.onLoad();
-                }
-              })
+                url: '/pages/index/index'
+              });
             }, 2000)
             console.log('添加用户成功')
           }).catch(err => {

@@ -97,7 +97,6 @@ Page({
       return;
     }
 
-
     wx.showLoading({
       title: '您的心情正在游历全世界～～',
     })
@@ -164,7 +163,7 @@ Page({
           setTimeout(() => {
             const pages = getCurrentPages();
             const prePage = pages[pages.length - 2]
-            prePage.onLoad()
+            prePage.back()
             wx.switchTab({
               url: '/pages/mood/mood'
             });
@@ -203,7 +202,7 @@ Page({
           const pages = getCurrentPages();
           const prePage = pages[pages.length - 2]
           console.log(prePage)
-          prePage.onLoad()
+          prePage.back()
           wx.switchTab({
             url: '/pages/mood/mood'
           });

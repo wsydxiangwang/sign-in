@@ -8,7 +8,8 @@
     "pages/publish/publish",
     "pages/mood/comment/comment",
     "pages/centre/myMood/myMood",
-    "pages/centre/calendar/calendar"
+    "pages/centre/calendar/calendar",
+    "pages/mood/message/message"
   ],
   "window": {
     "backgroundColor": "#fff",

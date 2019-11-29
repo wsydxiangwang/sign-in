@@ -154,17 +154,44 @@ Page({
       }
     })
   },
-  plane(){
-    clearTimeout(time)
-    var time = null;
-    this.setData({
-      planeActive: true
-    })
-    time = setTimeout(() => {
-      this.setData({
-        planeActive: false
+  // 删除
+  plane(e){
+    let index = e.currentTarget.dataset.index;
+    let thisData = this.data.moodList;
+    let id = thisData[index]._id;
+    let _this = this;
+
+    if (thisData[index].userDelete){
+      wx.showModal({
+        content: '删除心情可就不能恢复了哦~~',
+        success(res) {
+          if (res.confirm) {
+            thisData.splice(index, 1);
+            _this.setData({
+              moodList: thisData
+            })
+            db.collection('comment').doc(id).remove();
+          }
+        }
       })
-    }, 3000)
+    }else{
+      clearTimeout(time)
+      var time = null;
+      this.setData({
+        planeActive: true
+      })
+      time = setTimeout(() => {
+        this.setData({
+          planeActive: false
+        })
+      }, 3000)
+    }
+  },
+  // 消息
+  message(e){
+    wx.navigateTo({
+      url: 'message/message'
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -187,10 +214,9 @@ Page({
 
           currentPage++; // +1 方可获取下一页数据
           
-          // 时间戳转换 再追加数据
           res.data.forEach((item) => {
 
-            // 同步获取本地数据
+            // 获取本地点赞数据
             let idArr = item._id;
             try {
               let value = wx.getStorageSync('moodLike');
@@ -203,11 +229,18 @@ Page({
               }
             } catch (e) {}
 
+            // 时间戳转换
             item.createTime = app.timestampFormat(item.createTime)
             if(item.comment.length != 0){
               item.comment.forEach((items) => {
                 items.time = app.timestampFormat(items.time)
               })
+            }
+
+            // 当前用户可删除
+            let openId = app.globalData.openId;
+            if (item._openid == openId){
+              item.userDelete = true;
             }
 
           })
@@ -291,7 +324,13 @@ Page({
     this.getData();
     wx: wx.stopPullDownRefresh();//停止刷新操作
   },
-
+  back(){
+    currentPage = 0;
+    this.setData({
+      moodList: []
+    })
+    this.getData();
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
