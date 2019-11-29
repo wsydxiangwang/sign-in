@@ -7,7 +7,7 @@
 
   <view class="mood-title" bindtap="publish">嘿，你好吗，欢迎光临心情小镇，点我来发表心情吧！！！</view>
 
-  <view class="message" bindtap="message"><text>世界回复了一个惊喜给你，快来看鸭！！</text></view>
+  <!-- <view class="message" bindtap="message"><text>世界回复了一个惊喜给你，快来看鸭！！</text></view> -->
 
   <view class="mood-content">
     <block wx:if="{{moodList.length}}">
