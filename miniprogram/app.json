@@ -3,13 +3,9 @@
     "pages/index/index",
     "pages/centre/centre",
     "pages/ranking/ranking",
-    "pages/mood/mood",
     "pages/login/login",
-    "pages/publish/publish",
-    "pages/mood/comment/comment",
     "pages/centre/myMood/myMood",
-    "pages/centre/calendar/calendar",
-    "pages/mood/message/message"
+    "pages/centre/calendar/calendar"
   ],
   "window": {
     "backgroundColor": "#fff",
@@ -29,7 +25,7 @@
         "selectedIconPath": "images/sign-actived.png"
       },
       {
-        "pagePath": "pages/mood/mood",
+        "pagePath": "pages/ranking/ranking",
         "iconPath": "images/mood.png",
         "selectedIconPath": "images/mood-actived.png"
       },

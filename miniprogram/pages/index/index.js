@@ -173,12 +173,6 @@ Page({
         })
       })
   },
-  // 排行榜
-  ranking: function(e){
-    wx.navigateTo({
-      url: '../ranking/ranking'
-    })
-  },
   /**
    *  监听页面加载
    */

@@ -16,9 +16,6 @@
         <text>坚持</text>
         <text>{{count}} 天</text>
       </view>
-      <view class="item" bindtap="ranking">
-        排行
-      </view>
     </view>
     <view class="word">一年之计在于春，一日之计在于晨。</view>
     <image class="info-bg" src="../../images/bg.png" mode="widthFix"></image>

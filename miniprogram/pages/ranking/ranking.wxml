@@ -69,7 +69,7 @@
             </view>
           </view>
 
-          <image class="rankingBg" src="../../images/rankingBg.png"></image>
+          <!-- <image class="rankingBg" src="../../images/rankingBg.png"></image> -->
 
           <view class="other" style="height:{{otherHeight}}px">
             <view class="other-box">

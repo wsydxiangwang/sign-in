@@ -1,8 +1,0 @@
-{
-  "usingComponents": {},
-  "onReachBottomDistance": 50,
-  "enablePullDownRefresh": true,
-  "navigationBarTextStyle": "white",
-  "navigationBarTitleText": "心情小镇",
-  "navigationBarBackgroundColor": "#ecd4c3"
-}
